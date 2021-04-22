@@ -1,0 +1,4 @@
+simbot:
+  core:
+    bots: 2492921801:1355247243
+    scan-package: org.qqbot.listener
