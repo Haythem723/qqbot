@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="CompilerConfiguration">
-<<<<<<< HEAD
     <annotationProcessing>
       <profile name="Maven default annotation processors profile" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
@@ -18,8 +17,5 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="qq-bot" options="-parameters" />
     </option>
-=======
-    <bytecodeTargetLevel target="1.8" />
->>>>>>> parent of 3d00b61... 删除多余依赖
   </component>
 </project>

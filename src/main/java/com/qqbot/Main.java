@@ -1,12 +1,17 @@
 package com.qqbot;
 
-import love.forte.simbot.annotation.SimbotApplication;
-import love.forte.simbot.core.SimbotApp;
-import love.forte.simbot.core.SimbotContext;
 
-@SimbotApplication
+import com.qqbot.http.UrlResp;
+import com.qqbot.http.Urllib;
+
+import static com.qqbot.constant.MiraiConstant.BASE_URL;
+
 public class Main {
   public static void main(String[] args) {
-    final SimbotContext context = SimbotApp.run(Main.class, args);
+    UrlResp urlResp = Urllib.builder().setUrl(BASE_URL + "/about").get();
+
+    if (urlResp.getResponseCode() == UrlResp.HTTP_OK) {
+      System.out.println(urlResp.getText());
+    }
   }
 }
