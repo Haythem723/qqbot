@@ -476,7 +476,7 @@ public class Urllib {
             Iterator entries = dataList.iterator();
             while (entries.hasNext()) {
                 Object value = entries.next();
-                parseValue(sb, value);
+                parseValue(sb, value.toString());
 
                 if (entries.hasNext())
                     sb.append(",");
