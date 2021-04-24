@@ -1,6 +1,7 @@
 package org.qqbot.core;
 
 
+import net.mamoe.mirai.event.events.GroupMessageEvent;
 import net.mamoe.mirai.event.events.MessageEvent;
 import org.jdeferred2.Promise;
 

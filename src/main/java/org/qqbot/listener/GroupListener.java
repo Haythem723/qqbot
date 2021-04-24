@@ -12,7 +12,6 @@ public class GroupListener implements Consumer<GroupMessageEvent> {
 		String content = groupMessageEvent.getMessage().serializeToMiraiCode();
 		if (content.contains("[mirai:at:2492921801]")) {
 			CommandHelp help = new CommandHelp();
-
 			help.invoke(groupMessageEvent);
 		}
 	}
