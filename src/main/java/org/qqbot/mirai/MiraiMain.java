@@ -1,5 +1,7 @@
 package org.qqbot.mirai;
 
+import net.mamoe.mirai.event.events.FriendMessageEvent;
+import net.mamoe.mirai.event.events.GroupMessageEvent;
 import net.mamoe.mirai.event.events.MessageEvent;
 import net.mamoe.mirai.message.data.At;
 import net.mamoe.mirai.message.data.MessageChain;
@@ -13,7 +15,14 @@ public class MiraiMain {
 
 	public void quickReply(MessageEvent event, String msg) {
 		long senderId = event.getSender().getId();
-		MessageChain chain = new MessageChainBuilder().append(new At(senderId)).append(msg).build();
+		MessageChain chain = null;
+		if (event instanceof GroupMessageEvent) {
+			chain = new MessageChainBuilder().append(new At(senderId)).append(msg).build();
+			event.getSubject().sendMessage(chain);
+		}
+		if (event instanceof FriendMessageEvent) {
+			chain = new MessageChainBuilder().append(msg).build();
+		}
 		event.getSubject().sendMessage(chain);
 	}
 }
