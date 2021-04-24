@@ -2,6 +2,7 @@ package org.qqbot.listener;
 
 import net.mamoe.mirai.event.GlobalEventChannel;
 import net.mamoe.mirai.event.events.GroupMessageEvent;
+import org.jetbrains.annotations.NotNull;
 import org.qqbot.core.CommandHelp;
 
 import java.util.function.Consumer;
