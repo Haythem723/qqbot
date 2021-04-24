@@ -16,6 +16,7 @@ public class CommandHelp implements CommandInvoker {
 	@Override
 	public Promise invoke(MessageEvent event, String... args) {
 		StringBuilder sb = new StringBuilder();
+		String content = event.getMessage().toString();
 		sb.append("可用命令:\n");
 		if (args.length == 0) {
 			Deferred<String, String, String> deferred = new DeferredObject<String, String, String>();
