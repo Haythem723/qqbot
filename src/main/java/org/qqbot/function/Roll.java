@@ -11,6 +11,9 @@ public class Roll {
         for(int i = 0; i< time; i++){
             int res = random.nextInt(face) + 1;
             sum += res;
+
+            seed = System.nanoTime();
+            random.setSeed(seed);
         }
         return sum;
     }
