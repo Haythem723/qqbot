@@ -2,7 +2,7 @@ package org.qqbot.function;
 
 import java.util.Random;
 
-public class Roll {
+public class Dice {
     private static int roll(int time, int face){
         Random random = new Random();
         Long seed = System.nanoTime();
