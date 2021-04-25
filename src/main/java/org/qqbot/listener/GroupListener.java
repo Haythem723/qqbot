@@ -1,10 +1,7 @@
 package org.qqbot.listener;
 
 import net.mamoe.mirai.event.events.GroupMessageEvent;
-import org.qqbot.core.CommandDice;
-import org.qqbot.core.CommandHelp;
-import org.qqbot.core.CommandInvoker;
-import org.qqbot.core.CommandMeaVoice;
+import org.qqbot.core.*;
 import org.qqbot.entity.Command;
 import org.qqbot.utils.CommonUtil;
 
@@ -30,6 +27,10 @@ public class GroupListener implements Consumer<GroupMessageEvent> {
 			}
 			case COMMAND_MEA_BUTTON: {
 				invoker = new CommandMeaVoice();
+				break;
+			}
+			case COMMAND_GET_HAPPY:{
+				invoker = new CommandJoke();
 				break;
 			}
 			default: {
