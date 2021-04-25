@@ -2,6 +2,8 @@ package org.qqbot.entity;
 
 import org.qqbot.constant.CommandType;
 
+import java.util.Arrays;
+
 public class Command {
 	private CommandType type;
 	private String[] args;
@@ -31,5 +33,10 @@ public class Command {
 	public Command setArgs(String[] args) {
 		this.args = args;
 		return this;
+	}
+
+	@Override
+	public String toString() {
+		return this.getType().toString() + "  " + Arrays.toString(this.args);
 	}
 }

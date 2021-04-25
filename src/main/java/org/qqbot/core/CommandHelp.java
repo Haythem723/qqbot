@@ -17,11 +17,12 @@ import org.qqbot.utils.MybatisUtil;
 import java.util.List;
 
 /**
+ * 处理帮助指令
  * @author diyigemt
  */
 public class CommandHelp implements CommandInvoker {
 	@Override
-	public Promise invoke(MessageEvent event, Command command) {
+	public Promise<String, String, String> invoke(MessageEvent event, Command command) {
 		StringBuilder sb = new StringBuilder().append("\n可用命令:\n");
 		String[] args = command.getArgs();
 		if (args == null || args.length == 0) {
@@ -29,12 +30,11 @@ public class CommandHelp implements CommandInvoker {
 			Deferred<String, String, String> deferred = new DeferredObject<String, String, String>();
 			Promise<String, String, String> promise = deferred.promise();
 			promise.then(res -> {
-				MiraiMain.getInstance().quickReply(event, sb.toString());;
+				MiraiMain.getInstance().quickReply(event, res);
 			});
 			// 获取帮助列表
 			SqlSession sqlSession = MybatisUtil.getSqlSession();
 			HelpMapper mapper = sqlSession.getMapper(HelpMapper.class);
-			// TODO 无法获取
 			List<HelpListItem> helpList = mapper.getHelpList();
 			sqlSession.close();
 			for (HelpListItem item : helpList) {
@@ -54,11 +54,12 @@ public class CommandHelp implements CommandInvoker {
 		// 获取具体帮助
 		SqlSession sqlSession = MybatisUtil.getSqlSession();
 		HelpMapper mapper = sqlSession.getMapper(HelpMapper.class);
-		List<HelpInfoItem> helpInfo = mapper.getHelpInfo(command.getType().getIndex());
+		List<HelpInfoItem> helpInfo = mapper.getHelpInfo(args[0]);
 		int index = 1;
 		for (HelpInfoItem item : helpInfo) {
 			String tmp = (index++) + item.toString();
-			sb.append(tmp);
+			sb.append(tmp)
+					.append("\n");
 		}
 		sqlSession.close();
 		deferred.resolve(sb.toString());

@@ -19,11 +19,11 @@
 	    FROM help
     </select>
 
-    <select id="getHelpInfo" parameterType="java.lang.Integer" resultMap="HelpInfoItem">
+    <select id="getHelpInfo" parameterType="java.lang.String" resultMap="HelpInfoItem">
         SELECT `help_id`, `usage`, `description`
         FROM help
         INNER JOIN help_usage hu on help.id = hu.help_id
-        WHERE `help`.id = #{id}
+        WHERE `help`.id = #{helpId}
     </select>
 
     <select id="getHelpListItem" resultMap="HelpListItem">

@@ -9,9 +9,17 @@ import org.qqbot.mapper.HelpMapper;
 import java.io.IOException;
 import java.io.Reader;
 
+/**
+ * @author diyigemt
+ * mybatis工具类
+ */
 public class MybatisUtil {
+	// 全局mybatis工厂 官方文档推荐只有一个
 	private static SqlSessionFactory factory;
 
+	/**
+	 * 根据配置文件 初始化工厂
+	 */
 	public static void init() {
 		Reader reader = null;
 		try {
@@ -20,9 +28,12 @@ public class MybatisUtil {
 			e.printStackTrace();
 		}
 		factory = new SqlSessionFactoryBuilder().build(reader);
-//		factory.getConfiguration().addMapper(HelpMapper.class);
 	}
 
+	/**
+	 * 获取一个sqlsession 官方推荐执行完事务后需要释放
+	 * @return 一个session
+	 */
 	public static SqlSession getSqlSession() {
 		if (factory == null) {
 			init();
