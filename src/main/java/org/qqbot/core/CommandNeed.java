@@ -10,8 +10,10 @@ public class CommandNeed implements CommandInvoker {
 	@Override
 	public Promise invoke(MessageEvent event, Command command) {
 		// TODO
-		return new SimplePromise<String>(result -> {
+		return new SimplePromise<String>(deferred -> {
+			deferred.resolve("暂未开放");
+		}).then(result -> {
 			MiraiMain.getInstance().quickReply(event, result);
-		}).resolve("暂未开放");
+		});
 	}
 }

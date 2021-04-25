@@ -31,15 +31,17 @@ public class CommandHelp implements CommandInvoker {
 		ArrayList<String> args = command.getArgs();
 		if (args == null || args.size() == 0) {
 			sb.append("使用 /帮助 指令序号 可以查看详细用法\n可用命令:\n");
-			// 获取帮助列表
-			List<HelpListItem> helpList = impHelpMapper.getHelpList();
-			for (HelpListItem item : helpList) {
-				sb.append(item.toString())
-						.append("\n");
-			}
-			return new SimplePromise<String>(result -> {
+			return new SimplePromise<String>(deferred -> {
+				// 获取帮助列表
+				List<HelpListItem> helpList = impHelpMapper.getHelpList();
+				for (HelpListItem item : helpList) {
+					sb.append(item.toString())
+							.append("\n");
+				}
+				deferred.resolve(sb.toString());
+			}).then(result -> {
 				MiraiMain.getInstance().quickReply(event, result);
-			}).resolve(sb.toString());
+			});
 		}
 		Integer integer = CommonUtil.parseInt(args.get(0));
 		if (integer == null) return this.invoke(event, command.setType(CommandType.COMMAND_HELP));
@@ -52,7 +54,7 @@ public class CommandHelp implements CommandInvoker {
 					.append("\n");
 		}
 		return new SimplePromise<String>(result -> {
-			MiraiMain.getInstance().quickReply(event, result);
+//			MiraiMain.getInstance().quickReply(event, result);
 		}).resolve(sb.toString());
 	}
 }

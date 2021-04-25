@@ -35,7 +35,7 @@ public class CommandDice implements CommandInvoker {
 		}
 		String roll = Dice.getRoll(args.get(0));
 		return new SimplePromise<String>(result -> {
-			MiraiMain.getInstance().quickReply(event, result);
+//			MiraiMain.getInstance().quickReply(event, result);
 		}).resolve(roll);
 	}
 
