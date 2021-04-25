@@ -28,7 +28,7 @@ public class CommonUtil {
 		Matcher matcher = dicePattern.matcher(source);
 		if (matcher.find()) {
 			int count = matcher.groupCount();
-			if (count == 1) {
+			if (count >= 1 && !(matcher.group(1) != "")) {
 				command.setType(CommandType.COMMAND_DICE);
 				String[] args = new String[count];
 				args[0] = matcher.group(1);

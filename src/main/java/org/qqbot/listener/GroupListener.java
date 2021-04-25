@@ -28,6 +28,6 @@ public class GroupListener implements Consumer<GroupMessageEvent> {
 				invoker = new CommandHelp();
 			}
 		}
-//		invoker.invoke(groupMessageEvent, command);
+		invoker.invoke(groupMessageEvent, command);
 	}
 }

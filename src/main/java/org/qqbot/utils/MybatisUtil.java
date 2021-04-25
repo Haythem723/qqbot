@@ -20,7 +20,7 @@ public class MybatisUtil {
 			e.printStackTrace();
 		}
 		factory = new SqlSessionFactoryBuilder().build(reader);
-		factory.getConfiguration().addMapper(HelpMapper.class);
+//		factory.getConfiguration().addMapper(HelpMapper.class);
 	}
 
 	public static SqlSession getSqlSession() {

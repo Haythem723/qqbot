@@ -22,15 +22,15 @@ import java.util.List;
 public class CommandHelp implements CommandInvoker {
 	@Override
 	public Promise invoke(MessageEvent event, Command command) {
-		StringBuilder sb = new StringBuilder().append("可用命令:\n");
+		StringBuilder sb = new StringBuilder().append("\n可用命令:\n");
 		String[] args = command.getArgs();
 		if (args == null || args.length == 0) {
 			sb.append("使用 /帮助 指令序号 可以查看详细用法\n可用命令:\n");
-//			Deferred<String, String, String> deferred = new DeferredObject<String, String, String>();
-//			Promise<String, String, String> promise = deferred.promise();
-//			promise.then(res -> {
-//				MiraiMain.getInstance().quickReply(event, res);
-//			});
+			Deferred<String, String, String> deferred = new DeferredObject<String, String, String>();
+			Promise<String, String, String> promise = deferred.promise();
+			promise.then(res -> {
+				MiraiMain.getInstance().quickReply(event, res);
+			});
 			// 获取帮助列表
 			SqlSession sqlSession = MybatisUtil.getSqlSession();
 			HelpMapper mapper = sqlSession.getMapper(HelpMapper.class);
@@ -42,7 +42,15 @@ public class CommandHelp implements CommandInvoker {
 						.append("\n");
 			}
 //			deferred.resolve(sb.toString());
-			MiraiMain.getInstance().quickReply(event, sb.toString());
+			Thread thread = new Thread(() -> {
+				try {
+					Thread.sleep(2000);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				MiraiMain.getInstance().quickReply(event, sb.toString());
+			});
+			thread.start();
 			return null;
 		}
 		Integer integer = CommonUtil.parseInt(args[0]);

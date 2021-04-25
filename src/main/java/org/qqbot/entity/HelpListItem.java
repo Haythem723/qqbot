@@ -21,7 +21,7 @@ public class HelpListItem {
 				.append(". ")
 				.append(this.command)
 				.append("  缩写: ")
-				.append(this.shortcut);
+				.append(this.shortcut == null ? "无" : this.shortcut);
 		return sb.toString();
 	}
 }

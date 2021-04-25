@@ -18,7 +18,6 @@ public class MiraiMain {
 		MessageChain chain = null;
 		if (event instanceof GroupMessageEvent) {
 			chain = new MessageChainBuilder().append(new At(senderId)).append(msg).build();
-			event.getSubject().sendMessage(chain);
 		}
 		if (event instanceof FriendMessageEvent) {
 			chain = new MessageChainBuilder().append(msg).build();
