@@ -47,6 +47,7 @@
 	<mappers>
 <!--		<package name="org.qqbot.mapper"/>-->
 		<mapper resource="org/qqbot/mapper/HelpMapper.xml"/>
+		<mapper resource="org/qqbot/mapper/VoiceMapper.xml"/>
 	</mappers>
 
 </configuration>

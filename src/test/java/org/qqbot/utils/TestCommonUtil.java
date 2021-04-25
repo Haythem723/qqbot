@@ -1,21 +1,13 @@
 package org.qqbot.utils;
 
-import net.mamoe.mirai.Bot;
-import net.mamoe.mirai.contact.Contact;
-import net.mamoe.mirai.contact.User;
-import net.mamoe.mirai.event.events.MessageEvent;
-import net.mamoe.mirai.message.data.MessageChain;
-import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.Test;
-import org.qqbot.core.CommandHelp;
-import org.qqbot.core.CommandInvoker;
 import org.qqbot.entity.Command;
 
 public class TestCommonUtil {
 	@Test
 	public void testParseCommand() {
 		MybatisUtil.init();
-		String content = "/1d2";
+		String content = "/咩";
 		Command command = CommonUtil.parseCommandAndArgs(content);
 //		CommandInvoker invoker = new CommandHelp();
 //		invoker.invoke(new MessageEvent() {
@@ -64,5 +56,10 @@ public class TestCommonUtil {
 //
 //			}
 //		}, command);
+	}
+
+	@Test
+	public void testEncoding() {
+		System.out.println(System.getProperty("file.encoding"));
 	}
 }

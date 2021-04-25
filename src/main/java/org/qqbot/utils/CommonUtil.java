@@ -6,6 +6,7 @@ import org.qqbot.constant.CommandType;
 import org.qqbot.entity.Command;
 import org.qqbot.entity.HelpListItem;
 import org.qqbot.mapper.HelpMapper;
+import org.qqbot.mybatis.ImpHelpMapper;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -47,9 +48,8 @@ public class CommonUtil {
 			// 由于 (.*) 的存在 导致会多一个 "" 参数 需要过滤
 			if (count >= 1 && !(matcher.group(1).equals(""))) {
 				command.setType(CommandType.COMMAND_DICE);
-				String[] args = new String[1];
-				args[0] = matcher.group(1);
-				command.setArgs(args);
+				String arg = matcher.group(1);
+				command.addArgs(arg);
 				return command;
 			}
 		}
@@ -61,10 +61,7 @@ public class CommonUtil {
 			String commands = matcher.group(1);
 			// 获取参数对应的参数序号
 			// TODO 模糊搜索
-			SqlSession sqlSession = MybatisUtil.getSqlSession();
-			HelpMapper mapper = sqlSession.getMapper(HelpMapper.class);
-			HelpListItem item = mapper.getHelpListItem(commands);
-			sqlSession.close();
+			HelpListItem item = new ImpHelpMapper().getHelpListItem(commands);
 			if (item != null) {
 				CommandType type = CommandType.getTypeById(item.getId());
 				command.setType(type);
@@ -73,7 +70,10 @@ public class CommonUtil {
 			if (count == 2 && (!matcher.group(2).equals(""))) {
 				String arg = matcher.group(2);
 				String[] args = arg.split(" ");
-				command.setArgs(args);
+				for (String s : args) {
+					if (s.equals("")) continue;
+					command.addArgs(s);
+ 				}
 			}
 		}
 		return command;

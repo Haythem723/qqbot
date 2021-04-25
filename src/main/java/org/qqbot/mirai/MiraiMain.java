@@ -3,9 +3,7 @@ package org.qqbot.mirai;
 import net.mamoe.mirai.event.events.FriendMessageEvent;
 import net.mamoe.mirai.event.events.GroupMessageEvent;
 import net.mamoe.mirai.event.events.MessageEvent;
-import net.mamoe.mirai.message.data.At;
-import net.mamoe.mirai.message.data.MessageChain;
-import net.mamoe.mirai.message.data.MessageChainBuilder;
+import net.mamoe.mirai.message.data.*;
 
 /**
  * 全局实例 用于回复消息
@@ -35,11 +33,28 @@ public class MiraiMain {
 		MessageChain chain = null;
 		if (event instanceof GroupMessageEvent) {
 			// 如果是群事件 回复时@本人
-			chain = new MessageChainBuilder().append(new At(senderId)).append(msg).build();
+			chain = new MessageChainBuilder().append(new At(senderId)).append("\n").append(msg).build();
 		}
 		if (event instanceof FriendMessageEvent) {
 			chain = new MessageChainBuilder().append(msg).build();
 		}
+		this.quickReply(event, chain);
+	}
+
+	public void quickReply (MessageEvent event, SingleMessage... messages) {
+		MessageChainBuilder builder = new MessageChainBuilder();
+		if (event instanceof GroupMessageEvent) {
+			// 如果是群事件 回复时@本人
+			long senderId = event.getSender().getId();
+			builder.append(new At(senderId)).append("\n");
+		}
+		for (SingleMessage message : messages) {
+			builder.append(message);
+		}
+		this.quickReply(event, builder.build());
+	}
+
+	private void quickReply(MessageEvent event, MessageChain chain) {
 		// 在非部署模式下 猜测可能会由于回复太快导致消息无法显示 先等待一下
 		if (DEVELOPMENT) {
 			try {
