@@ -58,7 +58,7 @@ public class MiraiMain {
 		// 在非部署模式下 猜测可能会由于回复太快导致消息无法显示 先等待一下
 		if (DEVELOPMENT) {
 			try {
-				Thread.sleep(1500);
+				Thread.sleep(200);
 				event.getSubject().sendMessage(chain);
 			} catch (InterruptedException e) {
 				e.printStackTrace();

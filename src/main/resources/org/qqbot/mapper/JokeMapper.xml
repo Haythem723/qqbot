@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="org.qqbot.mapper.JokeMapper">
-    <resultMap id="id" type="org.qqbot.entity.JokeLibItem" >
-        <id column="id" jdbcType="INTEGER" />
-        <result column="joke" jdbcType="VARCHAR" />
+    <resultMap id="JokeLibItem" type="org.qqbot.entity.JokeLibItem" >
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="joke" property="jokeBody" jdbcType="VARCHAR" />
     </resultMap>
 
     <select id="getJoke" resultMap="JokeLibItem">

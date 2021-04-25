@@ -31,7 +31,8 @@ public class MybatisUtil {
 	}
 
 	/**
-	 * 获取一个sqlsession 官方推荐执行完事务后需要释放
+	 * 获取一个sqlsession
+	 * 官方推荐执行完事务后需要释放
 	 * @return 一个session
 	 */
 	public static SqlSession getSqlSession() {

@@ -16,7 +16,6 @@ import java.util.regex.Pattern;
 
 /**
  * 处理骰子指令
- *
  * @author diyigemt HayThem
  */
 public class CommandDice implements CommandInvoker {
@@ -34,9 +33,11 @@ public class CommandDice implements CommandInvoker {
 			return this.handleErrorArgs(event, command);
 		}
 		String roll = Dice.getRoll(args.get(0));
-		return new SimplePromise<String>(result -> {
-//			MiraiMain.getInstance().quickReply(event, result);
-		}).resolve(roll);
+		return new SimplePromise<String>(deferred -> {
+			deferred.resolve(roll);
+		}).then(result -> {
+			MiraiMain.getInstance().quickReply(event, result);
+		});
 	}
 
 	private Promise<String, String, String> handleErrorArgs(MessageEvent event, Command command) {

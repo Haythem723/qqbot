@@ -12,20 +12,22 @@ import org.qqbot.utils.SimplePromise;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class CommandJoke implements CommandInvoker{
-        @Override
-        public Promise invoke(MessageEvent event, Command command) {
-            ArrayList<String> args = command.getArgs();
-            if(args.size() == 0){
-                int id = new Random(System.nanoTime()).nextInt(ConstantJoke.MAXIMUM_JOKE_LIB + 1);
-                JokeLibItem jokeLibItem = new ImpJokeMapper().getJoke(String.valueOf(id));
-                if(jokeLibItem != null){
-                    String res = jokeLibItem.toString();
-                    return new SimplePromise<String>(result ->{
-                        MiraiMain.getInstance().quickReply(event, result);
-                    }).resolve(res);
-                }
-            }
-            return null;
-        }
+public class CommandJoke implements CommandInvoker {
+	@Override
+	public Promise invoke(MessageEvent event, Command command) {
+		ArrayList<String> args = command.getArgs();
+		if (args.size() == 0) {
+			int id = new Random(System.nanoTime()).nextInt(ConstantJoke.MAXIMUM_JOKE_LIB + 1);
+			JokeLibItem jokeLibItem = new ImpJokeMapper().getJoke(String.valueOf(id));
+			if (jokeLibItem != null) {
+				String res = jokeLibItem.toString();
+				return new SimplePromise<String>(deferred -> {
+					deferred.resolve(res);
+				}).then(result -> {
+					MiraiMain.getInstance().quickReply(event, result);
+				});
+			}
+		}
+		return null;
+	}
 }

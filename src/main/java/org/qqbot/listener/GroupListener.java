@@ -25,6 +25,10 @@ public class GroupListener implements Consumer<GroupMessageEvent> {
 				invoker = new CommandDice();
 				break;
 			}
+			case COMMAND_NEED: {
+				invoker = new CommandNeed();
+				break;
+			}
 			case COMMAND_MEA_BUTTON: {
 				invoker = new CommandMeaVoice();
 				break;

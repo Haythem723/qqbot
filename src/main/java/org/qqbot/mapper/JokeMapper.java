@@ -5,5 +5,5 @@ import org.qqbot.entity.JokeLibItem;
 
 @Mapper
 public interface JokeMapper {
-    JokeLibItem getJoke(String id);
+	JokeLibItem getJoke(String id);
 }

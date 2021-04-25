@@ -26,9 +26,11 @@ public class CommandMeaVoice implements CommandInvoker {
 			VoiceInfoItem voiceInfo = new ImpMeaVoiceMapper().getVoiceInfo(String.valueOf(res));
 			if (voiceInfo != null) {
 				Voice voice = new Voice(voiceInfo.getFileName(), "1231312".getBytes(StandardCharsets.UTF_8), 12313123L, 12312312, voiceInfo.getUrl());
-				return new SimplePromise<SingleMessage>(result -> {
-//					MiraiMain.getInstance().quickReply(event, result);
-				}).resolve(voice);
+				return new SimplePromise<SingleMessage>(deferred -> {
+					deferred.resolve(voice);
+				}).then(result -> {
+					MiraiMain.getInstance().quickReply(event, result);
+				});
 			}
 		}
 		return null;

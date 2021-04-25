@@ -21,6 +21,7 @@ import java.util.List;
 
 /**
  * 处理帮助指令
+ *
  * @author diyigemt
  */
 public class CommandHelp implements CommandInvoker {
@@ -46,15 +47,17 @@ public class CommandHelp implements CommandInvoker {
 		Integer integer = CommonUtil.parseInt(args.get(0));
 		if (integer == null) return this.invoke(event, command.setType(CommandType.COMMAND_HELP));
 		// 获取具体帮助
-		List<HelpInfoItem> helpInfo = impHelpMapper.getHelpInfo(args.get(0));
-		int index = 1;
-		for (HelpInfoItem item : helpInfo) {
-			String tmp = (index++) + item.toString();
-			sb.append(tmp)
-					.append("\n");
-		}
-		return new SimplePromise<String>(result -> {
-//			MiraiMain.getInstance().quickReply(event, result);
-		}).resolve(sb.toString());
+		return new SimplePromise<String>(deferred -> {
+			List<HelpInfoItem> helpInfo = impHelpMapper.getHelpInfo(args.get(0));
+			int index = 1;
+			for (HelpInfoItem item : helpInfo) {
+				String tmp = (index++) + item.toString();
+				sb.append(tmp)
+						.append("\n");
+			}
+			deferred.resolve(sb.toString());
+		}).then(result -> {
+			MiraiMain.getInstance().quickReply(event, result);
+		});
 	}
 }

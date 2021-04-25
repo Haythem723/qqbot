@@ -30,6 +30,7 @@
         SELECT `id`, `command`, `shortcut`
         FROM help
         WHERE `command` = #{command}
+        OR `shortcut` = #{command}
     </select>
 
 </mapper>
