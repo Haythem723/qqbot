@@ -1,0 +1,316 @@
+{
+  "header": {
+    "user_id": "51170",
+    "account_type": "1",
+    "short_limit": "6",
+    "long_limit": "200",
+    "long_remaining": 193,
+    "short_remaining": 5,
+    "status": 0,
+    "results_requested": 3,
+    "index": {
+      "0": {
+        "status": 0,
+        "parent_id": 0,
+        "id": 0,
+        "results": 3
+      },
+      "2": {
+        "status": 0,
+        "parent_id": 2,
+        "id": 2,
+        "results": 3
+      },
+      "5": {
+        "status": 0,
+        "parent_id": 5,
+        "id": 5,
+        "results": 3
+      },
+      "51": {
+        "status": 0,
+        "parent_id": 5,
+        "id": 51,
+        "results": 3
+      },
+      "52": {
+        "status": 0,
+        "parent_id": 5,
+        "id": 52,
+        "results": 3
+      },
+      "53": {
+        "status": 0,
+        "parent_id": 5,
+        "id": 53,
+        "results": 3
+      },
+      "6": {
+        "status": 0,
+        "parent_id": 6,
+        "id": 6,
+        "results": 3
+      },
+      "8": {
+        "status": 0,
+        "parent_id": 8,
+        "id": 8,
+        "results": 3
+      },
+      "9": {
+        "status": 0,
+        "parent_id": 9,
+        "id": 9,
+        "results": 6
+      },
+      "10": {
+        "status": 0,
+        "parent_id": 10,
+        "id": 10,
+        "results": 3
+      },
+      "11": {
+        "status": 0,
+        "parent_id": 11,
+        "id": 11,
+        "results": 3
+      },
+      "12": {
+        "status": 0,
+        "parent_id": 9,
+        "id": 12,
+        "results": 6
+      },
+      "16": {
+        "status": 0,
+        "parent_id": 16,
+        "id": 16,
+        "results": 3
+      },
+      "18": {
+        "status": 0,
+        "parent_id": 18,
+        "id": 18,
+        "results": 3
+      },
+      "19": {
+        "status": 0,
+        "parent_id": 19,
+        "id": 19,
+        "results": 3
+      },
+      "20": {
+        "status": 0,
+        "parent_id": 20,
+        "id": 20,
+        "results": 3
+      },
+      "21": {
+        "status": 0,
+        "parent_id": 21,
+        "id": 21,
+        "results": 3
+      },
+      "211": {
+        "status": 0,
+        "parent_id": 21,
+        "id": 211,
+        "results": 3
+      },
+      "22": {
+        "status": 0,
+        "parent_id": 22,
+        "id": 22,
+        "results": 3
+      },
+      "23": {
+        "status": 0,
+        "parent_id": 23,
+        "id": 23,
+        "results": 3
+      },
+      "24": {
+        "status": 0,
+        "parent_id": 24,
+        "id": 24,
+        "results": 3
+      },
+      "25": {
+        "status": 0,
+        "parent_id": 9,
+        "id": 25,
+        "results": 6
+      },
+      "26": {
+        "status": 0,
+        "parent_id": 9,
+        "id": 26,
+        "results": 6
+      },
+      "27": {
+        "status": 0,
+        "parent_id": 9,
+        "id": 27,
+        "results": 6
+      },
+      "28": {
+        "status": 0,
+        "parent_id": 9,
+        "id": 28,
+        "results": 6
+      },
+      "29": {
+        "status": 0,
+        "parent_id": 9,
+        "id": 29,
+        "results": 6
+      },
+      "30": {
+        "status": 0,
+        "parent_id": 9,
+        "id": 30,
+        "results": 6
+      },
+      "31": {
+        "status": 0,
+        "parent_id": 31,
+        "id": 31,
+        "results": 3
+      },
+      "32": {
+        "status": 0,
+        "parent_id": 32,
+        "id": 32,
+        "results": 3
+      },
+      "33": {
+        "status": 0,
+        "parent_id": 33,
+        "id": 33,
+        "results": 3
+      },
+      "34": {
+        "status": 0,
+        "parent_id": 34,
+        "id": 34,
+        "results": 3
+      },
+      "341": {
+        "status": 0,
+        "parent_id": 341,
+        "id": 341,
+        "results": 3
+      },
+      "35": {
+        "status": 0,
+        "parent_id": 35,
+        "id": 35,
+        "results": 3
+      },
+      "36": {
+        "status": 0,
+        "parent_id": 36,
+        "id": 36,
+        "results": 3
+      },
+      "37": {
+        "status": 0,
+        "parent_id": 37,
+        "id": 37,
+        "results": 3
+      },
+      "38": {
+        "status": 0,
+        "parent_id": 38,
+        "id": 38,
+        "results": 3
+      },
+      "39": {
+        "status": 0,
+        "parent_id": 39,
+        "id": 39,
+        "results": 3
+      },
+      "40": {
+        "status": 0,
+        "parent_id": 40,
+        "id": 40,
+        "results": 3
+      },
+      "41": {
+        "status": 0,
+        "parent_id": 41,
+        "id": 41,
+        "results": 3
+      },
+      "42": {
+        "status": 0,
+        "parent_id": 42,
+        "id": 42,
+        "results": 3
+      }
+    },
+    "search_depth": "128",
+    "minimum_similarity": 34.16,
+    "query_image_display": "userdata\/InGLWvCeb.jpg.png",
+    "query_image": "InGLWvCeb.jpg",
+    "results_returned": 3
+  },
+  "results": [
+    {
+      "header": {
+        "similarity": "74.2",
+        "thumbnail": "https:\/\/img1.saucenao.com\/res\/pixiv\/6977\/69772288_p0_master1200.jpg?auth=9zlvIHjv3r8eXzNOpmYnqw&exp=1619550000",
+        "index_id": 5,
+        "index_name": "Index #5: Pixiv Images - 69772288_p0_master1200.jpg",
+        "dupes": 0
+      },
+      "data": {
+        "ext_urls": [
+          "https:\/\/www.pixiv.net\/member_illust.php?mode=medium&illust_id=69772288"
+        ],
+        "title": "焚风起源",
+        "pixiv_id": 69772288,
+        "member_name": "Bounty Devil",
+        "member_id": 10173453
+      }
+    },
+    {
+      "header": {
+        "similarity": "60.69",
+        "thumbnail": "https:\/\/img1.saucenao.com\/res\/pixiv\/6977\/manga\/69772288_p1.jpg?auth=CXllSG5PCTu335wdZmBBqA&exp=1619550000",
+        "index_id": 5,
+        "index_name": "Index #5: Pixiv Images - 69772288_p1.jpg",
+        "dupes": 0
+      },
+      "data": {
+        "ext_urls": [
+          "https:\/\/www.pixiv.net\/member_illust.php?mode=medium&illust_id=69772288"
+        ],
+        "title": "焚风起源",
+        "pixiv_id": 69772288,
+        "member_name": "Bounty Devil",
+        "member_id": 10173453
+      }
+    },
+    {
+      "header": {
+        "similarity": "33.16",
+        "thumbnail": "https:\/\/img3.saucenao.com\/frames\/?expires=1619550000&init=aa52f504419aa8e2&data=e6c6c5a03172c253abc4095de40472129bae5b8a00d8e0faed51ce7228178377a10150de605ac001fcfd78870bed21a0c6f204319d14e3c7d89dd91725afdba51cbfe19e47699e84db74c0db7cadcfd24454fca62532e096099ca42f7295074123c090f23d47ce304e46f5ebcb8518c2&auth=039b8b27343d7a1697ae2c5a28b4a699d8a4dd7e",
+        "index_id": 21,
+        "index_name": "Index #21: Anime* - 10162-24-423757.jpg (5092)",
+        "dupes": 0
+      },
+      "data": {
+        "ext_urls": [
+          "https:\/\/anidb.net\/anime\/10305"
+        ],
+        "source": "Kamigami no Asobi",
+        "anidb_aid": 10305,
+        "part": "03",
+        "year": "2014-2014",
+        "est_time": "00:07:04 \/ 00:23:42"
+      }
+    }
+  ]
+}
