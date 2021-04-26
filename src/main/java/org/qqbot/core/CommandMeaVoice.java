@@ -12,17 +12,13 @@ import org.qqbot.Plugin;
 import org.qqbot.constant.ConstantVoice;
 import org.qqbot.entity.Command;
 import org.qqbot.entity.VoiceInfoItem;
+import org.qqbot.mapper.MeaVoiceMapper;
 import org.qqbot.mirai.MiraiMain;
-import org.qqbot.mybatis.ImpMeaVoiceMapper;
-import org.qqbot.utils.CommonUtil;
-import org.qqbot.utils.FileUtil;
-import org.qqbot.utils.HttpUtil;
-import org.qqbot.utils.SimplePromise;
+import org.qqbot.utils.*;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -41,19 +37,23 @@ public class CommandMeaVoice implements CommandInvoker {
 			int res = new Random().nextInt(MAX_MEA_BUTTON_COUNT) + 1;
 			GroupMessageEvent finalEvent = (GroupMessageEvent) event;
 			return new SimplePromise<SingleMessage>(deferred -> {
-				VoiceInfoItem voiceInfo = new ImpMeaVoiceMapper().getVoiceInfo(String.valueOf(res));
+				VoiceInfoItem voiceInfo = MybatisUtil.getInstance().getSingleData(MeaVoiceMapper.class, VoiceInfoItem.class, "getVoiceInfo", String.valueOf(res));
 				if (voiceInfo == null) {
-					deferred.reject(new PlainText(CommonUtil.getCommandFailInfo(command) + "voiceId: " + res));
+					deferred.reject(new PlainText(CommonUtil.getCommandFailInfo(command, "文件信息获取失败, voiceId: " + res)));
 					return;
 				}
 				try {
-					File resourceFile = FileUtil.getVoiceResourceFile(voiceInfo.getFileName(), ConstantVoice.MEA_VOICE_FOLDER_NAME);
-//					ExternalResource externalResource = Mirai.getInstance().getFileCacheStrategy().newCache(new HttpUtil().getInputStream(voiceInfo.getUrl()), voiceInfo.getFileName());
-					ExternalResource externalResource = Mirai.getInstance().getFileCacheStrategy().newCache(new FileInputStream(resourceFile), voiceInfo.getFileName());
+					ExternalResource externalResource;
+					File resourceFile = FileUtil.getInstance().getVoiceResourceFile(voiceInfo.getFileName(), ConstantVoice.MEA_VOICE_FOLDER_NAME);
+					if (!resourceFile.exists()) {
+						externalResource = Mirai.getInstance().getFileCacheStrategy().newCache(new HttpUtil().getInputStream(voiceInfo.getUrl()), voiceInfo.getFileName());
+					} else {
+						externalResource = Mirai.getInstance().getFileCacheStrategy().newCache(new FileInputStream(resourceFile), voiceInfo.getFileName());
+					}
 					Voice voice = ExternalResource.Companion.uploadAsVoice(externalResource, finalEvent.getGroup());
 					deferred.resolve(voice);
 				} catch (IOException e) {
-					deferred.reject(new PlainText(CommonUtil.getCommandFailInfo(command) + "voiceId: " + res + " 在上传时, exception class:" + e.getClass()));
+					deferred.reject(new PlainText(CommonUtil.getCommandFailInfo(command, e) + "voiceId: " + res));
 					e.printStackTrace();
 				}
 			}).then(result -> {

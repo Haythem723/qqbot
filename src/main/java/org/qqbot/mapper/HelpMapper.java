@@ -7,7 +7,7 @@ import org.qqbot.entity.HelpListItem;
 import java.util.List;
 
 @Mapper
-public interface HelpMapper {
+public interface HelpMapper extends BaseMapper {
 	List<HelpListItem> getHelpList();
 
 	List<HelpInfoItem> getHelpInfo(String helpId);

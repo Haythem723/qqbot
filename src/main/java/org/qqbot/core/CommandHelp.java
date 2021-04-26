@@ -1,6 +1,5 @@
 package org.qqbot.core;
 
-import org.apache.ibatis.session.SqlSession;
 import org.qqbot.constant.CommandType;
 import org.qqbot.entity.Command;
 import org.qqbot.entity.HelpInfoItem;
@@ -8,10 +7,7 @@ import org.qqbot.entity.HelpListItem;
 import org.qqbot.mapper.HelpMapper;
 import org.qqbot.mirai.MiraiMain;
 import net.mamoe.mirai.event.events.MessageEvent;
-import org.jdeferred2.Deferred;
 import org.jdeferred2.Promise;
-import org.jdeferred2.impl.DeferredObject;
-import org.qqbot.mybatis.ImpHelpMapper;
 import org.qqbot.utils.CommonUtil;
 import org.qqbot.utils.MybatisUtil;
 import org.qqbot.utils.SimplePromise;
@@ -27,16 +23,15 @@ import java.util.List;
 public class CommandHelp implements CommandInvoker {
 	@Override
 	public Promise<String, String, String> invoke(MessageEvent event, Command command) {
-		ImpHelpMapper impHelpMapper = new ImpHelpMapper();
 		StringBuilder sb = new StringBuilder().append("可用命令:\n");
 		ArrayList<String> args = command.getArgs();
 		if (args == null || args.size() == 0) {
 			sb.append("使用 /帮助 指令序号 可以查看详细用法\n可用命令:\n");
 			return new SimplePromise<String>(deferred -> {
 				// 获取帮助列表
-				List<HelpListItem> helpList = impHelpMapper.getHelpList();
+				List<HelpListItem> helpList = MybatisUtil.getInstance().getListData(HelpMapper.class, HelpListItem.class, "getHelpList");
 				if (helpList == null || helpList.size() == 0) {
-					deferred.reject(CommonUtil.getCommandFailInfo(command));
+					deferred.reject(CommonUtil.getCommandFailInfo(command, "帮助列表获取失败"));
 					return;
 				}
 				for (HelpListItem item : helpList) {
@@ -51,12 +46,12 @@ public class CommandHelp implements CommandInvoker {
 			});
 		}
 		Integer integer = CommonUtil.parseInt(args.get(0));
-		if (integer == null) return this.invoke(event, command.setType(CommandType.COMMAND_HELP));
+		if (integer == null) return this.invoke(event, command.setType(CommandType.COMMAND_HELP).resetArgs());
 		// 获取具体帮助
 		return new SimplePromise<String>(deferred -> {
-			List<HelpInfoItem> helpInfo = impHelpMapper.getHelpInfo(args.get(0));
+			List<HelpInfoItem> helpInfo = MybatisUtil.getInstance().getListData(HelpMapper.class, HelpInfoItem.class, "getHelpInfo", args.get(0));
 			if (helpInfo == null || helpInfo.size() == 0) {
-				deferred.reject(CommonUtil.getCommandFailInfo(command));
+				deferred.reject(CommonUtil.getCommandFailInfo(command, "帮助信息获取失败"));
 				return;
 			}
 			int index = 1;

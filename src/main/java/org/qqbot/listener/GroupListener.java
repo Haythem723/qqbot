@@ -33,8 +33,16 @@ public class GroupListener implements Consumer<GroupMessageEvent> {
 				invoker = new CommandMeaVoice();
 				break;
 			}
+			case COMMAND_MANA_BUTTON: {
+				invoker = new CommandMana();
+				break;
+			}
 			case COMMAND_GET_HAPPY:{
 				invoker = new CommandJoke();
+				break;
+			}
+			case COMMAND_SEARCH_IMAGE: {
+				invoker = new CommandSearchImage();
 				break;
 			}
 			default: {

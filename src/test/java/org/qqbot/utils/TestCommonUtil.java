@@ -15,7 +15,7 @@ public class TestCommonUtil {
 	@Test
 	public void testParseCommand() {
 		MybatisUtil.init();
-		String content = "/来个乐子";
+		String content = "/帮助";
 		Command command = CommonUtil.parseCommandAndArgs(content);
 		CommandInvoker invoker = new CommandJoke();
 		invoker.invoke(new MessageEvent() {

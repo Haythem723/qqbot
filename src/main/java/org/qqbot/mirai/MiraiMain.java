@@ -10,7 +10,7 @@ import net.mamoe.mirai.message.data.*;
  * @author diyigemt
  */
 public class MiraiMain {
-	// 如果为开发模式 在国内可能会因为回复太快导致消息不显示 睡眠1s
+	// 如果为开发模式 在国内可能会因为回复太快导致消息不显示
 	public static final boolean DEVELOPMENT = true;
 	// 全局唯一实例
 	public static final MiraiMain INSTANCE = new MiraiMain();

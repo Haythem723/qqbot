@@ -1,12 +1,9 @@
 package org.qqbot.utils;
 
-import org.apache.ibatis.session.SqlSession;
-import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.qqbot.constant.CommandType;
 import org.qqbot.entity.Command;
 import org.qqbot.entity.HelpListItem;
 import org.qqbot.mapper.HelpMapper;
-import org.qqbot.mybatis.ImpHelpMapper;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -21,6 +18,7 @@ public class CommonUtil {
 
 	/**
 	 * 将字符串转换成Integer 是吧捕获异常并返回null
+	 *
 	 * @param s 要转换的字符串
 	 * @return 结果
 	 */
@@ -35,6 +33,7 @@ public class CommonUtil {
 
 	/**
 	 * 核心功能 将指令字符串通过正则分离 指令 和 参数
+	 *
 	 * @param source 原字符串
 	 * @return 分离出的指令 和 参数列表
 	 */
@@ -56,16 +55,17 @@ public class CommonUtil {
 		// 判断其他参数
 		matcher = commandPattern.matcher(source);
 		if (matcher.find()) {
-
 			int count = matcher.groupCount();
 			String commands = matcher.group(1);
+			System.out.println(commands);
 			// 获取参数对应的参数序号
 			// TODO 模糊搜索
-			HelpListItem item = new ImpHelpMapper().getHelpListItem(commands);
-			if (item != null) {
-				CommandType type = CommandType.getTypeById(item.getId());
-				command.setType(type);
+			HelpListItem item = MybatisUtil.getInstance().getSingleData(HelpMapper.class, HelpListItem.class, "getHelpListItem", commands);
+			if (item == null) {
+				return command.setType(CommandType.COMMAND_HELP);
 			}
+			CommandType type = CommandType.getTypeById(item.getId());
+			command.setType(type);
 			// 由于 (.*) 的存在 导致会多一个 "" 参数 需要过滤
 			if (count == 2 && (!matcher.group(2).equals(""))) {
 				String arg = matcher.group(2);
@@ -73,13 +73,31 @@ public class CommonUtil {
 				for (String s : args) {
 					if (s.equals("")) continue;
 					command.addArgs(s);
- 				}
+				}
 			}
 		}
 		return command;
 	}
 
-	public static String getCommandFailInfo(Command command) {
-		return "在执行 " + command.toString() + " 时失败";
+	public static String getCommandFailInfo(Command command, Exception e) {
+		StringBuilder sb = new StringBuilder();
+		sb.append("在执行 ")
+				.append(command.toString())
+				.append(" 时失败\nexception")
+				.append(e.getClass())
+				.append(": ")
+				.append(e.getMessage())
+				.append("\n");
+		return sb.toString();
+	}
+
+	public static String getCommandFailInfo(Command command, String msg) {
+		StringBuilder sb = new StringBuilder();
+		sb.append("在执行 ")
+				.append(command.toString())
+				.append(" 时失败\nmsg: ")
+				.append(msg)
+				.append("\n");
+		return sb.toString();
 	}
 }
