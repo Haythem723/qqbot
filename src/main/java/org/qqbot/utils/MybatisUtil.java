@@ -13,7 +13,7 @@ import java.io.Reader;
  * @author diyigemt
  * mybatis工具类
  */
-public class MybatisUtil {
+public class MybatisUtil implements InitializeUtil {
 	// 全局mybatis工厂 官方文档推荐只有一个
 	private static SqlSessionFactory factory;
 

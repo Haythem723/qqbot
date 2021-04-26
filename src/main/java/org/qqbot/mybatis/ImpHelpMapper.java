@@ -6,6 +6,8 @@ import org.qqbot.entity.HelpListItem;
 import org.qqbot.mapper.HelpMapper;
 import org.qqbot.utils.MybatisUtil;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.List;
 
 public class ImpHelpMapper implements HelpMapper {

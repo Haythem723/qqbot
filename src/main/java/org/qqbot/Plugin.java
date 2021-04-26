@@ -9,7 +9,10 @@ import net.mamoe.mirai.event.Listener;
 import net.mamoe.mirai.event.events.BotEvent;
 import net.mamoe.mirai.event.events.GroupMessageEvent;
 import org.qqbot.listener.GroupListener;
+import org.qqbot.utils.FileUtil;
 import org.qqbot.utils.MybatisUtil;
+
+import java.io.File;
 
 public final class Plugin extends JavaPlugin {
 	public static final Plugin INSTANCE = new Plugin();
@@ -17,6 +20,7 @@ public final class Plugin extends JavaPlugin {
 	private Plugin() {
 		super(new JvmPluginDescriptionBuilder("org.qqbot.qqbot", "1.0")
 				.author("diyigemt HayThem")
+				.name("qq-bot")
 				.build());
 	}
 
@@ -28,5 +32,6 @@ public final class Plugin extends JavaPlugin {
 		EventChannel<Event> channel = GlobalEventChannel.INSTANCE.filter(event -> event instanceof BotEvent && ((BotEvent) event).getBot().getId() == 1741557205L);
 		channel.subscribeAlways(GroupMessageEvent.class, new GroupListener());
 		MybatisUtil.init();
+		FileUtil.init();
 	}
 }
