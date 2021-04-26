@@ -12,11 +12,15 @@ public class TestPromise {
 		new SimplePromise<String>(deferred -> {
 			try {
 				Thread.sleep(1000);
-				deferred.resolve("hahaha");
+				if (null == null) {
+					deferred.reject("reject");
+					return;
+				}
+				deferred.resolve("resolve");
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-		}).then(System.out::println);
+		}).then(System.out::println).fail(System.out::println);
 		Thread.sleep(2000);
 	}
 }

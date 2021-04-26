@@ -54,6 +54,6 @@ public class Command {
 
 	@Override
 	public String toString() {
-		return this.getType().toString() + "  " + this.args.toString();
+		return this.getType().toString() + ", args: " + this.args.toString();
 	}
 }

@@ -7,6 +7,7 @@ import org.qqbot.entity.Command;
 import org.qqbot.entity.JokeLibItem;
 import org.qqbot.mirai.MiraiMain;
 import org.qqbot.mybatis.ImpJokeMapper;
+import org.qqbot.utils.CommonUtil;
 import org.qqbot.utils.SimplePromise;
 
 import java.util.ArrayList;
@@ -18,15 +19,16 @@ public class CommandJoke implements CommandInvoker {
 		ArrayList<String> args = command.getArgs();
 		if (args.size() == 0) {
 			int id = new Random(System.nanoTime()).nextInt(ConstantJoke.MAXIMUM_JOKE_LIB + 1);
-			JokeLibItem jokeLibItem = new ImpJokeMapper().getJoke(String.valueOf(id));
-			if (jokeLibItem != null) {
+			return new SimplePromise<String>(deferred -> {
+				JokeLibItem jokeLibItem = new ImpJokeMapper().getJoke(String.valueOf(id));
+				if (jokeLibItem == null) deferred.reject(CommonUtil.getCommandFailInfo(command) + "jokeId: " + id);
 				String res = jokeLibItem.toString();
-				return new SimplePromise<String>(deferred -> {
-					deferred.resolve(res);
-				}).then(result -> {
-					MiraiMain.getInstance().quickReply(event, result);
-				});
-			}
+				deferred.resolve(res);
+			}).then(result -> {
+				MiraiMain.getInstance().quickReply(event, result);
+			}).fail(result -> {
+				MiraiMain.getInstance().quickReply(event, result);
+			});
 		}
 		return null;
 	}

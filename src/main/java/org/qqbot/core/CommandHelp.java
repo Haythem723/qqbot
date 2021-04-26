@@ -35,12 +35,18 @@ public class CommandHelp implements CommandInvoker {
 			return new SimplePromise<String>(deferred -> {
 				// 获取帮助列表
 				List<HelpListItem> helpList = impHelpMapper.getHelpList();
+				if (helpList == null || helpList.size() == 0) {
+					deferred.reject(CommonUtil.getCommandFailInfo(command));
+					return;
+				}
 				for (HelpListItem item : helpList) {
 					sb.append(item.toString())
 							.append("\n");
 				}
 				deferred.resolve(sb.toString());
 			}).then(result -> {
+				MiraiMain.getInstance().quickReply(event, result);
+			}).fail(result -> {
 				MiraiMain.getInstance().quickReply(event, result);
 			});
 		}
@@ -49,6 +55,10 @@ public class CommandHelp implements CommandInvoker {
 		// 获取具体帮助
 		return new SimplePromise<String>(deferred -> {
 			List<HelpInfoItem> helpInfo = impHelpMapper.getHelpInfo(args.get(0));
+			if (helpInfo == null || helpInfo.size() == 0) {
+				deferred.reject(CommonUtil.getCommandFailInfo(command));
+				return;
+			}
 			int index = 1;
 			for (HelpInfoItem item : helpInfo) {
 				String tmp = (index++) + item.toString();
@@ -57,6 +67,8 @@ public class CommandHelp implements CommandInvoker {
 			}
 			deferred.resolve(sb.toString());
 		}).then(result -> {
+			MiraiMain.getInstance().quickReply(event, result);
+		}).fail(result -> {
 			MiraiMain.getInstance().quickReply(event, result);
 		});
 	}

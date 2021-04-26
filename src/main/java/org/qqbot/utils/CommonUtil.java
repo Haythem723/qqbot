@@ -78,4 +78,8 @@ public class CommonUtil {
 		}
 		return command;
 	}
+
+	public static String getCommandFailInfo(Command command) {
+		return "在执行 " + command.toString() + " 时失败";
+	}
 }
