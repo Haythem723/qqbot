@@ -8,7 +8,6 @@ import net.mamoe.mirai.message.data.SingleMessage;
 import net.mamoe.mirai.message.data.Voice;
 import net.mamoe.mirai.utils.ExternalResource;
 import org.jdeferred2.Promise;
-import org.qqbot.Plugin;
 import org.qqbot.constant.ConstantVoice;
 import org.qqbot.entity.Command;
 import org.qqbot.entity.VoiceInfoItem;
@@ -46,7 +45,7 @@ public class CommandMeaVoice implements CommandInvoker {
 					ExternalResource externalResource;
 					File resourceFile = FileUtil.getInstance().getVoiceResourceFile(voiceInfo.getFileName(), ConstantVoice.MEA_VOICE_FOLDER_NAME);
 					if (!resourceFile.exists()) {
-						externalResource = Mirai.getInstance().getFileCacheStrategy().newCache(new HttpUtil().getInputStream(voiceInfo.getUrl()), voiceInfo.getFileName());
+						externalResource = Mirai.getInstance().getFileCacheStrategy().newCache(new HttpUtil().getMeaInputStream(voiceInfo.getUrl()), voiceInfo.getFileName());
 					} else {
 						externalResource = Mirai.getInstance().getFileCacheStrategy().newCache(new FileInputStream(resourceFile), voiceInfo.getFileName());
 					}

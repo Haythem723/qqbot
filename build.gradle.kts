@@ -27,6 +27,10 @@ dependencies {
     implementation("com.github.pagehelper", "pagehelper", "5.2.0")
     // https://mvnrepository.com/artifact/org.projectlombok/lombok
     implementation("org.projectlombok", "lombok", "1.18.20")
+    // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core
+    implementation("com.fasterxml.jackson.core", "jackson-core", "2.12.3")
+    implementation("com.fasterxml.jackson.core", "jackson-databind", "2.12.3")
+    implementation("com.fasterxml.jackson.core", "jackson-annotations", "2.12.3")
 
     testImplementation("org.junit.jupiter", "junit-jupiter", "5.6.0")
 }

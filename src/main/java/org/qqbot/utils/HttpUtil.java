@@ -8,7 +8,8 @@ import java.io.InputStream;
 import java.net.URL;
 
 public class HttpUtil {
-	public InputStream getInputStream(String urlString) {
+
+	public InputStream getMeaInputStream(String urlString) {
 		InputStream inputStream = null;
 		try {
 			URL url = new URL(urlString);
@@ -21,6 +22,18 @@ public class HttpUtil {
 			connection.setRequestProperty("cookie", ConstantHttp.HEADER_COOKIE);
 			connection.setRequestProperty("User-agent", ConstantHttp.HEADER_USER_AGENT);
 			connection.connect();
+			inputStream = connection.getInputStream();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return inputStream;
+	}
+
+	public InputStream getInputStream(String urlString) {
+		InputStream inputStream = null;
+		try {
+			URL url = new URL(urlString);
+			HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
 			inputStream = connection.getInputStream();
 		} catch (IOException e) {
 			e.printStackTrace();
