@@ -61,7 +61,7 @@ public class CommonUtil {
 			// TODO 模糊搜索
 			HelpListItem item = MybatisUtil.getInstance().getSingleData(HelpMapper.class, HelpListItem.class, "getHelpListItem", commands);
 			if (item == null) {
-				return command.setType(CommandType.COMMAND_HELP);
+				return command.setType(CommandType.COMMAND_NULL).resetAndAddArgs(commands);
 			}
 			CommandType type = CommandType.getTypeById(item.getId());
 			command.setType(type);

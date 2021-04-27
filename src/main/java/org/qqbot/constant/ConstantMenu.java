@@ -11,4 +11,5 @@ public class ConstantMenu {
 	public static final String COMMAND_MANA_BUTTON = "5";
 	public static final String COMMAND_GET_HAPPY = "6";
 	public static final String COMMAND_SEARCH_IMAGE = "7";
+	public static final int MAX_COMMAND_INDEX = 7;
 }
