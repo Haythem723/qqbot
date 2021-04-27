@@ -10,13 +10,23 @@ public class HelpInfoItem {
 	private String usage;
 	private String description;
 
+	private String getDivDescription() {
+		StringBuilder sb = new StringBuilder();
+		String[] split = this.description.split("\\[n]");
+		for (String s :split) {
+			sb.append(s)
+					.append("\n");
+		}
+		return sb.toString();
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append(". ")
 				.append(this.usage)
 				.append("    ")
-				.append(this.description);
+				.append(getDivDescription());
 		return sb.toString();
 	}
 }

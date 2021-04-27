@@ -8,6 +8,8 @@ import net.mamoe.mirai.message.data.SingleMessage;
 import net.mamoe.mirai.message.data.Voice;
 import net.mamoe.mirai.utils.ExternalResource;
 import org.jdeferred2.Promise;
+import org.qqbot.constant.CommandType;
+import org.qqbot.constant.ConstantMenu;
 import org.qqbot.constant.ConstantVoice;
 import org.qqbot.entity.Command;
 import org.qqbot.entity.VoiceInfoItem;
@@ -32,35 +34,35 @@ public class CommandMeaVoice implements CommandInvoker {
 		}
 		ArrayList<String> args = command.getArgs();
 		// 随机播放
-		if (args.size() == 0) {
-			int res = new Random().nextInt(MAX_MEA_BUTTON_COUNT) + 1;
-			GroupMessageEvent finalEvent = (GroupMessageEvent) event;
-			return new SimplePromise<SingleMessage>(deferred -> {
-				VoiceInfoItem voiceInfo = MybatisUtil.getInstance().getSingleData(MeaVoiceMapper.class, VoiceInfoItem.class, "getVoiceInfo", String.valueOf(res));
-				if (voiceInfo == null) {
-					deferred.reject(new PlainText(CommonUtil.getCommandFailInfo(command, "文件信息获取失败, voiceId: " + res)));
-					return;
-				}
-				try {
-					ExternalResource externalResource;
-					File resourceFile = FileUtil.getInstance().getVoiceResourceFile(voiceInfo.getFileName(), ConstantVoice.MEA_VOICE_FOLDER_NAME);
-					if (!resourceFile.exists()) {
-						externalResource = Mirai.getInstance().getFileCacheStrategy().newCache(new HttpUtil().getMeaInputStream(voiceInfo.getUrl()), voiceInfo.getFileName());
-					} else {
-						externalResource = Mirai.getInstance().getFileCacheStrategy().newCache(new FileInputStream(resourceFile), voiceInfo.getFileName());
-					}
-					Voice voice = ExternalResource.Companion.uploadAsVoice(externalResource, finalEvent.getGroup());
-					deferred.resolve(voice);
-				} catch (IOException e) {
-					deferred.reject(new PlainText(CommonUtil.getCommandFailInfo(command, e) + "voiceId: " + res));
-					e.printStackTrace();
-				}
-			}).then(result -> {
-				MiraiMain.getInstance().quickReply(event, result);
-			}).fail(result -> {
-				MiraiMain.getInstance().quickReply(event, result);
-			});
+		if (args.size() != 0) {
+			return new CommandHelp().invoke(event, command.setType(CommandType.COMMAND_HELP).resetAndAddArgs(ConstantMenu.COMMAND_MEA_BUTTON));
 		}
-		return null;
+		int res = new Random().nextInt(MAX_MEA_BUTTON_COUNT) + 1;
+		GroupMessageEvent finalEvent = (GroupMessageEvent) event;
+		return new SimplePromise<SingleMessage>(deferred -> {
+			VoiceInfoItem voiceInfo = MybatisUtil.getInstance().getSingleData(MeaVoiceMapper.class, VoiceInfoItem.class, "getVoiceInfo", String.valueOf(res));
+			if (voiceInfo == null) {
+				deferred.reject(new PlainText(CommonUtil.getCommandFailInfo(command, "文件信息获取失败, voiceId: " + res)));
+				return;
+			}
+			try {
+				ExternalResource externalResource;
+				File resourceFile = FileUtil.getInstance().getVoiceResourceFile(voiceInfo.getFileName(), ConstantVoice.MEA_VOICE_FOLDER_NAME);
+				if (!resourceFile.exists()) {
+					externalResource = Mirai.getInstance().getFileCacheStrategy().newCache(new HttpUtil().getMeaInputStream(voiceInfo.getUrl()), voiceInfo.getFileName());
+				} else {
+					externalResource = Mirai.getInstance().getFileCacheStrategy().newCache(new FileInputStream(resourceFile), voiceInfo.getFileName());
+				}
+				Voice voice = ExternalResource.Companion.uploadAsVoice(externalResource, finalEvent.getGroup());
+				deferred.resolve(voice);
+			} catch (IOException e) {
+				deferred.reject(new PlainText(CommonUtil.getCommandFailInfo(command, e) + "voiceId: " + res));
+				e.printStackTrace();
+			}
+		}).then(result -> {
+			MiraiMain.getInstance().quickReply(event, result);
+		}).fail(result -> {
+			MiraiMain.getInstance().quickReply(event, result);
+		});
 	}
 }

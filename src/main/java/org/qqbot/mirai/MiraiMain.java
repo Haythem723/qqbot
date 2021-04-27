@@ -55,17 +55,18 @@ public class MiraiMain {
 	}
 
 	public void quickReply(MessageEvent event, MessageChain chain) {
+		event.getSubject().sendMessage(chain);
 		// 在非部署模式下 猜测可能会由于回复太快导致消息无法显示 先等待一下
 		// 好像修复了 由于Promise引起的 暂时不去掉
-		if (DEVELOPMENT) {
-			try {
-				Thread.sleep(200);
-				event.getSubject().sendMessage(chain);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-		} else {
-			event.getSubject().sendMessage(chain);
-		}
+//		if (DEVELOPMENT) {
+//			try {
+//				Thread.sleep(1000);
+//				event.getSubject().sendMessage(chain);
+//			} catch (InterruptedException e) {
+//				e.printStackTrace();
+//			}
+//		} else {
+//			event.getSubject().sendMessage(chain);
+//		}
 	}
 }

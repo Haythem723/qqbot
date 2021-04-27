@@ -15,7 +15,6 @@ import org.qqbot.function.Saucenao;
 import org.qqbot.mirai.MiraiMain;
 import org.qqbot.utils.SimplePromise;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 

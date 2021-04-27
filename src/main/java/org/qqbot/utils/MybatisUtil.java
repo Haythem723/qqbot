@@ -87,7 +87,7 @@ public class MybatisUtil implements InitializeUtil {
 		T mapper = sqlSession.getMapper(mapperClass);
 		List<K> res = null;
 		try {
-			Method method = mapperClass.getMethod(methodName);
+			Method method = mapperClass.getMethod(methodName, arg1.getClass());
 			res = (List<K>) method.invoke(mapper, arg1);
 		} catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
 			e.printStackTrace();

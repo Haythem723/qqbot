@@ -57,7 +57,6 @@ public class CommonUtil {
 		if (matcher.find()) {
 			int count = matcher.groupCount();
 			String commands = matcher.group(1);
-			System.out.println(commands);
 			// 获取参数对应的参数序号
 			// TODO 模糊搜索
 			HelpListItem item = MybatisUtil.getInstance().getSingleData(HelpMapper.class, HelpListItem.class, "getHelpListItem", commands);
