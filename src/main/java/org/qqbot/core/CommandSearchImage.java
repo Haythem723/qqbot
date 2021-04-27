@@ -50,10 +50,10 @@ public class CommandSearchImage implements CommandInvoker {
 					.append(String.valueOf(pixiv ? data.getPixiv_id() : data.getAnidb_aid()))
 					.build();
 			deferred.resolve(build);
-		}).then(result -> {
+		}, result -> {
 			MiraiMain.getInstance().quickReply(event, result);
-		}).fail(result -> {
+		}, result -> {
 			MiraiMain.getInstance().quickReply(event, result);
-		});
+		}).me();
 	}
 }

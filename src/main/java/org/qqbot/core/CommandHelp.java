@@ -48,7 +48,7 @@ public class CommandHelp implements CommandInvoker {
 			});
 		}
 		Integer integer = CommonUtil.parseInt(args.get(0));
-		if (integer == null) return this.invoke(event, command.setType(CommandType.COMMAND_HELP).resetArgs());
+		if (integer == null) return new CommandNull().invoke(event, command.resetAndAddArgs(args.get(0)));
 		if (integer > MAX_COMMAND_INDEX || integer < 1) return new CommandNull().invoke(event, command.resetAndAddArgs(integer.toString()));
 		// 获取具体帮助
 		return new SimplePromise<String>(deferred -> {

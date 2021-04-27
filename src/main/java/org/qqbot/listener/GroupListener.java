@@ -46,7 +46,7 @@ public class GroupListener implements Consumer<GroupMessageEvent> {
 				break;
 			}
 			default: {
-				invoker = new CommandHelp();
+				invoker = new CommandNull();
 			}
 		}
 		invoker.invoke(groupMessageEvent, command);

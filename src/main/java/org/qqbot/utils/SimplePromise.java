@@ -14,8 +14,46 @@ public class SimplePromise<T> {
 		this.deferred = new DeferredObject<T, T, T>();
 		this.promise = deferred.promise();
 		new Thread(() -> {
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 			handler.handler(deferred);
 		}).start();
+	}
+
+	public SimplePromise(PromiseHandler<T> handler, DoneCallback<? super T> doneCallback) {
+		this.deferred = new DeferredObject<T, T, T>();
+		this.promise = deferred.promise();
+		this.then(doneCallback);
+		new Thread(() -> {
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			handler.handler(deferred);
+		}).start();
+	}
+
+	public SimplePromise(PromiseHandler<T> handler, DoneCallback<? super T> doneCallback, FailCallback<? super T> failCallback) {
+		this.deferred = new DeferredObject<T, T, T>();
+		this.promise = deferred.promise();
+		this.then(doneCallback);
+		this.fail(failCallback);
+		new Thread(() -> {
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			handler.handler(deferred);
+		}).start();
+	}
+
+	public Promise<T, T, T> me() {
+		return this.promise;
 	}
 
 	public Promise<T, T, T> then(DoneCallback<? super T> doneCallback) {

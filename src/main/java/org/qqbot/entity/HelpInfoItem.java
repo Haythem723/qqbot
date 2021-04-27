@@ -13,9 +13,10 @@ public class HelpInfoItem {
 	private String getDivDescription() {
 		StringBuilder sb = new StringBuilder();
 		String[] split = this.description.split("\\[n]");
-		for (String s :split) {
-			sb.append(s)
-					.append("\n");
+		for (int i = 0; i < split.length; i++) {
+			sb.append(split[i]);
+			if (i + 1 == split.length) continue;
+			sb.append("\n");
 		}
 		return sb.toString();
 	}

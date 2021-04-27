@@ -71,4 +71,11 @@ public class TestCommonUtil {
 	public void testEncoding() {
 		System.out.println(System.getProperty("file.encoding"));
 	}
+
+	@Test
+	public void testSplit() {
+		String s = "aaaaaa";
+		String[] split = s.split("\\[n]");
+		System.out.println(split);
+	}
 }
