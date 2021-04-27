@@ -15,8 +15,6 @@ import java.util.regex.Pattern;
 public class CommonUtil {
 	private static final Pattern dicePattern = Pattern.compile("/([0-9]+[dD][0-9]+)(.*)$");
 	private static final Pattern commandPattern = Pattern.compile("/([\\u4e00-\\u9fa5]+|[a-zA-Z]+) ?(.*)$");
-	private static final Pattern saucenaoSimilarityPattern = Pattern.compile("\"similarity\": \"([0-9.]+)\"");
-	private static final Pattern saucenaoUrlPattern = Pattern.compile("\"ext_urls\": \\[] \"https?://.*\"");
 
 	/**
 	 * 将字符串转换成Integer 是吧捕获异常并返回null

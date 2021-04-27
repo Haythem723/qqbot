@@ -54,7 +54,7 @@ public class MiraiMain {
 		this.quickReply(event, builder.build());
 	}
 
-	private void quickReply(MessageEvent event, MessageChain chain) {
+	public void quickReply(MessageEvent event, MessageChain chain) {
 		// 在非部署模式下 猜测可能会由于回复太快导致消息无法显示 先等待一下
 		// 好像修复了 由于Promise引起的 暂时不去掉
 		if (DEVELOPMENT) {

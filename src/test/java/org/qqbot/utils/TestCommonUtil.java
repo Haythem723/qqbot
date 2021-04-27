@@ -71,9 +71,4 @@ public class TestCommonUtil {
 	public void testEncoding() {
 		System.out.println(System.getProperty("file.encoding"));
 	}
-
-	@Test
-	public void testJackson() {
-		String img = Saucenao.getImg("https://lychee.diyigemt.net/uploads/small/c67a56f170c3c830b830fb1b33004d74.jpg");
-	}
 }
