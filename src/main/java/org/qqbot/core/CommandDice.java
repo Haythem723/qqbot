@@ -33,7 +33,6 @@ public class CommandDice implements CommandInvoker {
 			return this.handleErrorArgs(event, command);
 		}
 		if (args.size() == 2 && args.get(1).equals("log")) {
-			List<DiceLogItem> logs = MybatisUtil.getInstance().getListData(DiceLogMapper.class, DiceLogItem.class, "getSenderDiceLog", "1355247243");
 			return handleLog(event);
 		}
 		Matcher matcher = dicePattern.matcher(args.get(0));
@@ -57,7 +56,7 @@ public class CommandDice implements CommandInvoker {
 
 	private Promise handleLog(MessageEvent event) {
 		return new SimplePromise<List<DiceLogItem>>(deferred -> {
-			List<DiceLogItem> logs = MybatisUtil.getInstance().getListData(DiceLogMapper.class, DiceLogItem.class, "getSenderDiceLog", "1355247243");
+			List<DiceLogItem> logs = MybatisUtil.getInstance().getListData(DiceLogMapper.class, DiceLogItem.class, "getSenderDiceLog", String.valueOf(event.getSender().getId()));
 			if (logs == null) {
 				deferred.reject(null);
 				return;

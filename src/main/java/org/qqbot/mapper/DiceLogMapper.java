@@ -1,8 +1,9 @@
 package org.qqbot.mapper;
 
-import com.sun.tools.javac.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.qqbot.entity.DiceLogItem;
+
+import java.util.List;
 
 @Mapper
 public interface DiceLogMapper extends BaseMapper {
