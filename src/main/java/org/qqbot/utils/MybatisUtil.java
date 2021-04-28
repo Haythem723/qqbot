@@ -96,4 +96,28 @@ public class MybatisUtil implements InitializeUtil {
 		}
 		return res;
 	}
+
+	public <T extends BaseMapper, K> int insetData(Class<T> mapperClass, Class<K> resClass, String methodName, Object arg1) {
+		SqlSession sqlSession = MybatisUtil.getInstance().getSqlSession();
+		T mapper = sqlSession.getMapper(mapperClass);
+		int res = -1;
+		Method[] methods = mapperClass.getMethods();
+		Method method = null;
+		for (Method m : methods) {
+			if (m.getName().equals(methodName)) {
+				method = m;
+				break;
+			}
+		}
+		try {
+			if (method == null) throw new NoSuchMethodException("没有与名字" + methodName + "对应的方法!");
+			res = (int) method.invoke(mapper, arg1);
+			sqlSession.commit();
+		} catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
+			e.printStackTrace();
+		} finally {
+			sqlSession.close();
+		}
+		return res;
+	}
 }

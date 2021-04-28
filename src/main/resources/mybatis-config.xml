@@ -58,6 +58,7 @@
 		<mapper resource="org/qqbot/mapper/HelpMapper.xml"/>
 		<mapper resource="org/qqbot/mapper/VoiceMapper.xml"/>
 		<mapper resource="org/qqbot/mapper/JokeMapper.xml"/>
+		<mapper resource="org/qqbot/mapper/DiceLogMapper.xml"/>
 	</mappers>
 
 </configuration>
