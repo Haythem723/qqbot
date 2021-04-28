@@ -14,7 +14,7 @@ import java.util.regex.Pattern;
 
 public class Saucenao {
   private static final String URL_BASE = "https://saucenao.com/search.php";
-  private static final int DB = 5;
+  private static final int DB = 999;
   private static final String KEY = "257501498bb01aebc1c5cd8e659b00a1a8545e8a";
   private static final int OUTPUT_TYPE = 2;
   private static final int NUMRES = 1;
