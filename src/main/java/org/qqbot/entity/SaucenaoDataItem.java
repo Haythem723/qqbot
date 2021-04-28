@@ -13,7 +13,7 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class SaucenaoDataItem {
   // 判断是pixiv还是anidb
-  private boolean isPixiv = true;
+  private boolean isPixiv = false;
   // pixiv内容
   private List<String> ext_urls;
   private String title;
@@ -21,14 +21,25 @@ public class SaucenaoDataItem {
   private String member_name;
   private int member_id;
   //anidb内容
+  private boolean isAniDB = false;
   private String source;
   private int anidb_aid;
   private String part;
   private String year;
   private String est_time;
+  //其它来源
+  private boolean isdefault = true;
 
   public boolean isPixiv() {
     return isPixiv;
+  }
+
+  public boolean isDefault(){
+    return isdefault;
+  }
+
+  public void setDefault(boolean defaults){
+    isdefault = defaults;
   }
 
   public void setPixiv(boolean pixiv) {
@@ -81,6 +92,14 @@ public class SaucenaoDataItem {
 
   public void setSource(String source) {
     this.source = source;
+  }
+
+  public boolean getAniDB_id(){
+    return isAniDB;
+  }
+
+  public void setAniDB_id(boolean ani_db){
+    isAniDB = ani_db;
   }
 
   public int getAnidb_aid() {
