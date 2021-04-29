@@ -2,7 +2,10 @@ package org.qqbot.function;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import net.mamoe.mirai.message.data.MessageChainBuilder;
 import org.junit.jupiter.api.Test;
+import org.qqbot.entity.SaucenaoDataItem;
+import org.qqbot.entity.SaucenaoHeaderItem;
 import org.qqbot.entity.SaucenaoResult;
 
 import java.io.IOException;
@@ -10,8 +13,19 @@ import java.io.IOException;
 public class TestSaucenao {
   @Test
   public void test() {
-    SaucenaoResult result = Saucenao.getResult("https://lychee.diyigemt.net/uploads/small/c67a56f170c3c830b830fb1b33004d74.jpg");
-    System.out.println(result);
+    SaucenaoResult imageResult = Saucenao.getResult("https://pixiv.cat/83736901.jpg");
+    MessageChainBuilder builder = new MessageChainBuilder();
+    SaucenaoHeaderItem header = imageResult.getHeader();
+    int index_id = header.getIndex_id();
+    SaucenaoDataItem data = imageResult.getData();
+    if (!(index_id == 5 || index_id == 21)) {
+      data.setDefault(false);
+      data.setPixiv(false);
+      data.setAniDB_id(false);
+    }
+    boolean pixiv = data.isPixiv();
+    boolean anidb = data.isAniDB();
+    boolean q = pixiv || anidb;
   }
 
   @Test

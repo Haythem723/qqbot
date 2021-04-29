@@ -1,7 +1,5 @@
 package org.qqbot.core;
 
-import com.sun.xml.internal.bind.v2.TODO;
-import net.mamoe.mirai.IMirai;
 import net.mamoe.mirai.Mirai;
 import net.mamoe.mirai.event.events.MessageEvent;
 import net.mamoe.mirai.message.data.*;
@@ -40,13 +38,10 @@ public class CommandSearchImage implements CommandInvoker {
 			SaucenaoHeaderItem header = imageResult.getHeader();
 			int index_id = header.getIndex_id();
 			SaucenaoDataItem data = imageResult.getData();
-			if (index_id == 34) {
-				data.setPixiv(true);
-				data.setDefault(false);
-			}
-			else if (index_id == 21) {
-				data.setAniDB_id(true);
-				data.setDefault(false);
+			if (!(index_id == 5 || index_id == 21)) {
+				data.setDefault(true);
+				data.setPixiv(false);
+				data.setAniDB_id(false);
 			}
 			boolean pixiv = data.isPixiv();
 			boolean anidb = data.isAniDB();
