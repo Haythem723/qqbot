@@ -36,9 +36,13 @@ public class CommandHelp implements CommandInvoker {
 					deferred.reject(CommonUtil.getCommandFailInfo(command, "帮助列表获取失败"));
 					return;
 				}
+				int index = 1;
 				for (HelpListItem item : helpList) {
-					sb.append(item.toString())
+					sb.append(index)
+							.append(".")
+							.append(item.toString())
 							.append("\n");
+					index++;
 				}
 				deferred.resolve(sb.toString());
 			}).then(result -> {
@@ -49,12 +53,13 @@ public class CommandHelp implements CommandInvoker {
 		}
 		Integer integer = CommonUtil.parseInt(args.get(0));
 		if (integer == null) return new CommandNull().invoke(event, command.resetAndAddArgs(args.get(0)));
-		if (integer > MAX_COMMAND_INDEX || integer < 1) return new CommandNull().invoke(event, command.resetAndAddArgs(integer.toString()));
+		if (integer > MAX_COMMAND_INDEX || integer < 1)
+			return new CommandNull().invoke(event, command.resetAndAddArgs(integer.toString()));
 		// 获取具体帮助
 		return new SimplePromise<String>(deferred -> {
 			List<HelpInfoItem> helpInfo = MybatisUtil.getInstance().getListData(HelpMapper.class, HelpInfoItem.class, "getHelpInfo", args.get(0));
 			if (helpInfo == null || helpInfo.size() == 0) {
-				deferred.reject(CommonUtil.getCommandFailInfo(command, "帮助信息获取失败"));
+				deferred.reject(CommonUtil.getCommandFailInfo(command, "帮助信息不存在或获取失败"));
 				return;
 			}
 			int index = 1;

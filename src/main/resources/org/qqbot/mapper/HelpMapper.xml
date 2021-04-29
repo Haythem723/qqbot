@@ -1,36 +1,35 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="org.qqbot.mapper.HelpMapper" >
-    <resultMap id="HelpListItem" type="org.qqbot.entity.HelpListItem" >
-        <id column="id" property="id" jdbcType="INTEGER" />
-        <result column="command" property="command" jdbcType="CHAR" />
-        <result column="shortcut" property="shortcut" jdbcType="CHAR" />
+<mapper namespace="org.qqbot.mapper.HelpMapper">
+    <resultMap id="HelpListItem" type="org.qqbot.entity.HelpListItem">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="command" property="command" jdbcType="CHAR"/>
+        <result column="shortcut" property="shortcut" jdbcType="CHAR"/>
     </resultMap>
 
-    <resultMap id="HelpInfoItem" type="org.qqbot.entity.HelpInfoItem" >
-        <id column="help_id" property="helpId" jdbcType="INTEGER" />
-        <result column="usage" property="usage" jdbcType="CHAR" />
-        <result column="description" property="description" jdbcType="CHAR" />
+    <resultMap id="HelpInfoItem" type="org.qqbot.entity.HelpInfoItem">
+        <id column="help_id" property="helpId" jdbcType="INTEGER"/>
+        <result column="usage" property="usage" jdbcType="CHAR"/>
+        <result column="description" property="description" jdbcType="CHAR"/>
     </resultMap>
 
 
-    <select id="getHelpList" resultMap="HelpListItem"  >
+    <select id="getHelpList" resultMap="HelpListItem">
         SELECT `id`, `command`, `shortcut`
-	    FROM help
+        FROM help
+        WHERE `enable` = 'true'
     </select>
 
     <select id="getHelpInfo" parameterType="java.lang.String" resultMap="HelpInfoItem">
-        SELECT `help_id`, `usage`, `description`
-        FROM help
-        INNER JOIN help_usage hu on help.id = hu.help_id
-        WHERE `help`.id = #{helpId}
+        CALL get_help_info_item(#{helpId, jdbcType=CHAR});
     </select>
 
     <select id="getHelpListItem" resultMap="HelpListItem">
         SELECT `id`, `command`, `shortcut`
         FROM help
         WHERE `command` = #{command}
-        OR `shortcut` = #{command}
+           OR `shortcut` = #{command}
+            AND `enable` = 'true'
     </select>
 
 </mapper>

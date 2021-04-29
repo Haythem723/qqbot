@@ -17,9 +17,7 @@ public class HelpListItem {
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		sb.append(this.id)
-				.append(". ")
-				.append(this.command)
+		sb.append(this.command)
 				.append("  缩写: ")
 				.append(this.shortcut == null ? "无" : this.shortcut);
 		return sb.toString();
