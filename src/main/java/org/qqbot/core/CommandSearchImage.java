@@ -45,29 +45,33 @@ public class CommandSearchImage implements CommandInvoker {
 			}
 			boolean pixiv = data.isPixiv();
 			boolean anidb = data.isAniDB();
-			if(pixiv || anidb){
+			if(!(pixiv || anidb)){
 				MessageChain build = builder.append(image)
-						.append("\n相似度:")
+						.append("\n相似度: ")
 						.append(header.getSimilarity())
-						.append("\n来源:")
-						.append(pixiv ? "pixiv" : "anidb")
-						.append("\n标题: ")
-						.append(data.getTitle())
-						.append("\n" + (pixiv ? "pixiv_id:" : "anidb_id:"))
-						.append(String.valueOf(pixiv ? data.getPixiv_id() : data.getAnidb_aid()))
-						.build();
-				deferred.resolve(build);
-			}
-			else {
-				MessageChain build = builder.append(image)
-						.append("\n相似度:")
-						.append(header.getSimilarity())
-						.append("\n来源:")
-						.append("其它来源")
+						.append("\n来源: 其它来源")
+						.append("\nurl: ")
+						.append(data.getExt_urls().get(0))
 						.build();
 				//TODO: 这里写不写URL呢？ 如果引用不了原图的话这里肯定得给URL
+				//TODO: 那就写啊23333
 				deferred.resolve(build);
+				return;
 			}
+			MessageChain build = builder.append(image)
+					.append("\n相似度: ")
+					.append(header.getSimilarity())
+					.append("\n来源: ")
+					.append(pixiv ? "pixiv" : "anidb")
+					.append("\n标题: ")
+					.append(data.getTitle())
+					.append("\n")
+					.append(pixiv ? "pixiv_id: " : "anidb_id: ")
+					.append(String.valueOf(pixiv ? data.getPixiv_id() : data.getAnidb_aid()))
+					.append("\nurl: ")
+					.append(data.getExt_urls().get(0))
+					.build();
+			deferred.resolve(build);
 		}, result -> {
 			MiraiMain.getInstance().quickReply(event, result);
 		}, result -> {

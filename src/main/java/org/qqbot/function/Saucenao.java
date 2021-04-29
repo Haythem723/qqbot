@@ -2,6 +2,7 @@ package org.qqbot.function;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.qqbot.entity.SaucenaoHeaderItem;
 import org.qqbot.entity.SaucenaoResult;
 import org.qqbot.utils.CommonUtil;
 import org.qqbot.utils.HttpUtil;
@@ -17,7 +18,7 @@ public class Saucenao {
   private static final int DB = 999;
   private static final String KEY = "257501498bb01aebc1c5cd8e659b00a1a8545e8a";
   private static final int OUTPUT_TYPE = 2;
-  private static final int NUMRES = 1;
+  private static final int NUMRES = 5;
 
 
   private static final Pattern resultPattern = Pattern.compile("\"results\": ?(\\[.*])");
@@ -89,8 +90,21 @@ public class Saucenao {
       e.printStackTrace();
       return new SaucenaoResult(-1, "返回值序列化异常");
     }
-    SaucenaoResult result = results[0];
-    result.setStatus(0);
+    // 优先筛选pixiv和anidb的结果
+    SaucenaoResult result = null;
+    SaucenaoHeaderItem headerItem = null;
+    float maxSimilarity = 0f;
+    float tmpSimilarity = 0f;
+    for (SaucenaoResult saucenaoResult : results) {
+      headerItem = saucenaoResult.getHeader();
+      tmpSimilarity = Float.parseFloat(headerItem.getSimilarity());
+      if (maxSimilarity < tmpSimilarity) {
+        maxSimilarity = tmpSimilarity;
+        if (headerItem.getIndex_id() == 5 || headerItem.getIndex_id() == 21) result = saucenaoResult;
+      }
+    }
+    // 没找到
+    if (result == null) result = results[0];
     return result;
   }
 
