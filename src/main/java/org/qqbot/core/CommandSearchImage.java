@@ -48,16 +48,8 @@ public class CommandSearchImage implements CommandInvoker {
 			SaucenaoHeaderItem header = imageResult.getHeader();
 			int index_id = header.getIndex_id();
 			if (bandDBIndex.containsKey(index_id)) {
-				ExternalResource externalResource;
 				File resourceFile = FileUtil.getInstance().getImageResourceFile(FILE_NAME_HNG);
-				Image hngImage = null;
-//				try {
-//					externalResource = Mirai.getInstance().getFileCacheStrategy().newCache(new FileInputStream(resourceFile), FILE_NAME_HNG);
-//					hngImage = event.getSubject().uploadImage(externalResource);
-//				} catch (IOException e) {
-//					e.printStackTrace();
-//				}
-				hngImage = ExternalResource.Companion.uploadAsImage(resourceFile, event.getSubject());
+				Image hngImage = ExternalResource.Companion.uploadAsImage(resourceFile, event.getSubject());
 				MessageChain chain;
 				if (hngImage == null) {
 					chain = builder.append("H是禁止的").build();
