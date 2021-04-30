@@ -13,14 +13,9 @@ import java.io.InputStream;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static org.qqbot.constant.ConstantSaucenao.*;
+
 public class Saucenao {
-  private static final String URL_BASE = "https://saucenao.com/search.php";
-  private static final int DB = 999;
-  private static final String KEY = "257501498bb01aebc1c5cd8e659b00a1a8545e8a";
-  private static final int OUTPUT_TYPE = 2;
-  private static final int NUMRES = 5;
-
-
   private static final Pattern resultPattern = Pattern.compile("\"results\": ?(\\[.*])");
   private static final Pattern errorMessagePattern = Pattern.compile("\"message\": ?\"(.*.)\"");
   private static final Pattern statusPattern = Pattern.compile("\"status\": ?(\\d+),\\s*\"r");

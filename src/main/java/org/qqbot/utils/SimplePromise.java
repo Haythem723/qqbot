@@ -9,6 +9,7 @@ import org.jdeferred2.impl.DeferredObject;
 public class SimplePromise<T> {
 	private final Deferred<T, T, T> deferred;
 	private final Promise<T, T, T> promise;
+	public Promise me;
 
 	public SimplePromise(PromiseHandler<T> handler) {
 		this.deferred = new DeferredObject<T, T, T>();

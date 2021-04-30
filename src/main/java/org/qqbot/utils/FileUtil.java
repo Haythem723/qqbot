@@ -14,7 +14,7 @@ public class FileUtil implements InitializeUtil {
 
   public static void init() {
     File dataFolder = Plugin.INSTANCE.getDataFolder();
-    RESOURCE_ROOT_FOLDER_PATH = dataFolder.toPath() + SYSTEM_PATH_DIV;
+    RESOURCE_ROOT_FOLDER_PATH = dataFolder.toPath().toString();
     SYSTEM_PATH_DIV = System.getProperty("os.name").startsWith("win") ? "\\" : "/";
   }
 
@@ -26,13 +26,21 @@ public class FileUtil implements InitializeUtil {
     return getResourceFile(fileName, null);
   }
 
-  public File getResourceFile(String fileName, String fold) {
-    if (fold == null) return new File(RESOURCE_ROOT_FOLDER_PATH + fileName);
-    return new File(RESOURCE_ROOT_FOLDER_PATH + fold + SYSTEM_PATH_DIV + fileName);
+  public File getVoiceResourceFile(String fileName, String fold) {
+    if (fold == null) return getResourceFile(fileName, "voices");
+    return getResourceFile(fileName, "voices" + SYSTEM_PATH_DIV + fold);
   }
 
-  public File getVoiceResourceFile(String fileName, String fold) {
-    if (fold == null) return new File(RESOURCE_ROOT_FOLDER_PATH + "voices"  + SYSTEM_PATH_DIV + fileName);
-    return new File(RESOURCE_ROOT_FOLDER_PATH + "voices"  + SYSTEM_PATH_DIV + fold + SYSTEM_PATH_DIV + fileName);
+  public File getImageResourceFile(String fileName) {
+    return getResourceFile(fileName, "images");
+  }
+
+  public File getImageResourceFile(String fileName, String fold) {
+    return getResourceFile(fileName, "images" + SYSTEM_PATH_DIV + fold);
+  }
+
+  public File getResourceFile(String fileName, String fold) {
+    if (fold == null) return new File(RESOURCE_ROOT_FOLDER_PATH + SYSTEM_PATH_DIV + fileName);
+    return new File(RESOURCE_ROOT_FOLDER_PATH + SYSTEM_PATH_DIV + fold + SYSTEM_PATH_DIV + fileName);
   }
 }
