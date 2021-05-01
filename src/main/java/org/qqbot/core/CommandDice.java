@@ -24,7 +24,7 @@ import java.util.regex.Pattern;
  */
 public class CommandDice implements CommandInvoker {
 
-	private static final Pattern dicePattern = Pattern.compile("^([0-9]+)[dD]([0-9]+)$");
+	private static final Pattern dicePattern = Pattern.compile("^([0-9]+)[dD*]([0-9]+)$");
 
 	@Override
 	public Promise invoke(MessageEvent event, Command command) {

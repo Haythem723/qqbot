@@ -13,7 +13,7 @@ import java.util.regex.Pattern;
  * 通用工具类
  */
 public class CommonUtil {
-	private static final Pattern dicePattern = Pattern.compile("/([0-9]+[dD][0-9]+) ?(.*)$");
+	private static final Pattern dicePattern = Pattern.compile("/([0-9]+[dD*][0-9]+) ?(.*)$");
 	private static final Pattern commandPattern = Pattern.compile("/([\\u4e00-\\u9fa5]+|[a-zA-Z]+) ?(.*)$");
 
 	/**

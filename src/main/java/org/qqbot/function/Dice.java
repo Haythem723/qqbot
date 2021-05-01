@@ -6,12 +6,17 @@ import org.qqbot.utils.MybatisUtil;
 
 import java.util.Date;
 import java.util.Random;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * 根据参数得到骰子结果字符串
  * @author HayTmey
  */
 public class Dice {
+
+	private static final Pattern dicePattern = Pattern.compile("^([0-9]+)([dD*])([0-9]+)$");
+
 	/**
 	 * 根据参数获取骰子字符串
 	 * @param time 骰子数量
@@ -46,12 +51,23 @@ public class Dice {
 	 * @return 结果
 	 */
 	public static String getRoll(String s, String senderName, String senderId) { //可接受输入：1d10、1D10
-		String temp = s.toLowerCase();
+		Matcher matcher = dicePattern.matcher(s);
+		if (!matcher.find() || matcher.groupCount() < 3) return "非法输入";//用户的锅
+		String d = matcher.group(2);
 		try {
-			int time = Integer.parseInt(temp.substring(0, temp.indexOf("d")));
-			int face = Integer.parseInt(temp.substring(temp.indexOf("d") + 1));
+			int time = Integer.parseInt(matcher.group(1));
+			int face = Integer.parseInt(matcher.group(3));
 			Long seed = System.nanoTime();
-			String res = s + " = " + roll(time, face, seed);
+			StringBuilder sb = new StringBuilder();
+			sb.append(time);
+			if (d.equals("d")) {
+
+			}
+			sb.append(d.equals("d") ? "d" : "D")
+					.append(face)
+					.append(" = ")
+					.append(roll(time, face, seed));
+			String res = sb.toString();
 			appendDiceLog(res, senderName, senderId, seed);
 			return res;// 输出结果eg: 1d10 = 2
 		} catch (NumberFormatException | StringIndexOutOfBoundsException e) {

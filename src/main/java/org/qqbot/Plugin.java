@@ -18,7 +18,7 @@ public final class Plugin extends JavaPlugin {
 	public static final Plugin INSTANCE = new Plugin();
 
 	private Plugin() {
-		super(new JvmPluginDescriptionBuilder("org.qqbot", "1.2.2")
+		super(new JvmPluginDescriptionBuilder("org.qqbot", "1.2.3")
 				.author("diyigemt HayThem")
 				.name("qq-bot")
 				.build());
