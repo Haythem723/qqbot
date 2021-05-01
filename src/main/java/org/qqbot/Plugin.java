@@ -18,7 +18,7 @@ public final class Plugin extends JavaPlugin {
 	public static final Plugin INSTANCE = new Plugin();
 
 	private Plugin() {
-		super(new JvmPluginDescriptionBuilder("org.qqbot", "1.2.3")
+		super(new JvmPluginDescriptionBuilder("org.qqbot", "1.2.4")
 				.author("diyigemt HayThem")
 				.name("qq-bot")
 				.build());
@@ -29,7 +29,7 @@ public final class Plugin extends JavaPlugin {
 //		Listener<GroupMessageEvent> listener = GlobalEventChannel.INSTANCE.subscribeAlways(GroupMessageEvent.class, new GroupListener());
 		getLogger().info("Plugin text loaded!");
 		//指定在botEvent 且 bot的id(qq号)为某一定值时 向该频道广播事件 触发监听器
-		EventChannel<Event> channel = GlobalEventChannel.INSTANCE.filter(event -> event instanceof BotEvent && ((BotEvent) event).getBot().getId() == 1741557205L);
+		EventChannel<Event> channel = GlobalEventChannel.INSTANCE.filter(event -> event instanceof BotEvent && ((BotEvent) event).getBot().getId() == 2492921801L);
 		channel.subscribeAlways(GroupMessageEvent.class, new GroupListener());
 		MybatisUtil.init();
 		FileUtil.init();

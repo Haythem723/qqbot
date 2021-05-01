@@ -12,8 +12,8 @@ public class GroupListener implements Consumer<GroupMessageEvent> {
 	public void accept(GroupMessageEvent groupMessageEvent) {
 		String content = groupMessageEvent.getMessage().serializeToMiraiCode();
 		// 若消息没有@Bot则不做回应
-		if (!content.contains("[mirai:at:1741557205]")) return;
-		content = content.replace("[mirai:at:1741557205]", "").trim();
+		if (!content.contains("[mirai:at:2492921801]")) return;
+		content = content.replace("[mirai:at:2492921801]", "").trim();
 		Command command = CommonUtil.parseCommandAndArgs(content);
 		CommandInvoker invoker;
 		switch (command.getType()) {
