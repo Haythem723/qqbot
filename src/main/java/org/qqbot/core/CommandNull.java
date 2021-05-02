@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import static org.qqbot.constant.ConstantImage.FILE_NAME_SENSITIVE_GIF;
+import static org.qqbot.constant.ConstantImage.FILE_NAME_SENSITIVE_JPG;
 
 public class CommandNull implements CommandInvoker {
 	@Override
@@ -55,12 +56,12 @@ public class CommandNull implements CommandInvoker {
 				} else {
 					chain = builder.append(GIFImage).build();
 				}
-				deferred.reject(chain);
+				deferred.resolve(chain);
 				return;
 			}
 			else {
 				chain = builder.append(sb.toString()).build();
-				deferred.resolve(chain);
+				deferred.reject(chain);
 			}
 		}).then(result -> {
 			MiraiMain.getInstance().quickReply(event, result);
