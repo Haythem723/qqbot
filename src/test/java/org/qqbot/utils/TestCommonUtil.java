@@ -18,6 +18,7 @@ import org.junit.jupiter.api.Test;
 import org.qqbot.core.CommandDice;
 import org.qqbot.core.CommandInvoker;
 import org.qqbot.core.CommandJoke;
+import org.qqbot.core.CommandNull;
 import org.qqbot.entity.Command;
 import org.qqbot.function.Saucenao;
 
@@ -25,9 +26,9 @@ public class TestCommonUtil {
 	@Test
 	public void testParseCommand() {
 		MybatisUtil.init();
-		String content = "/1d2 log";
+		String content = "/感觉还是有bug比如说这是一条正常的命令命令里包含缩写sb";
 		Command command = CommonUtil.parseCommandAndArgs(content);
-		CommandInvoker invoker = new CommandDice();
+		CommandInvoker invoker = new CommandNull();
 		invoker.invoke(new MessageEvent() {
 			@NotNull
 			@Override
