@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.qqbot.mapper.SensitiveMapper">
+    <resultMap id="SensitiveItem" type="org.qqbot.entity.SensitiveItem">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="rootword" property="rootword" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="getSensitiveList" resultMap="SensitiveItem">
+        SELECT `id`, `rootword`
+        FROM sensitive_word
+    </select>
+</mapper>

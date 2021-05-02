@@ -29,7 +29,7 @@ public class TestHelp {
 			 * 中的命名空间+select 的 id
 			 */
 			List<HelpListItem> res = ss.selectList(
-					"org.qqbot.mapper.HelpMapper.getHelpList");
+					"org.qqbot.mapper.SensitiveMapper.getSensitiveList");
 			System.out.println(res);
 			// 提交事务
 			ss.commit();

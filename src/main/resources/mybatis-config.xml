@@ -52,6 +52,15 @@
 				<property name="password" value="qqbotdiyigemt"/>
 			</dataSource>
 		</environment>
+		<environment id="deploy3">
+			<transactionManager type="JDBC"/>
+			<dataSource type="POOLED">
+				<property name="driver" value="org.mariadb.jdbc.Driver"/>
+				<property name="url" value="jdbc:mariadb://localhost:3307/utf8mb4?characterEncoding=utf8"/>
+				<property name="username" value="root"/>
+				<property name="password" value="04521998723"/>
+			</dataSource>
+		</environment>
 	</environments>
 	<mappers>
 <!--		<package name="org.qqbot.mapper"/>-->
@@ -59,6 +68,7 @@
 		<mapper resource="org/qqbot/mapper/VoiceMapper.xml"/>
 		<mapper resource="org/qqbot/mapper/JokeMapper.xml"/>
 		<mapper resource="org/qqbot/mapper/DiceLogMapper.xml"/>
+		<mapper resource="org/qqbot/mapper/SensitiveMapper.xml"/>
 	</mappers>
 
 </configuration>
