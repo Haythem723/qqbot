@@ -1,7 +1,8 @@
 package org.qqbot.function;
 
 import org.qqbot.entity.DiceLogItem;
-import org.qqbot.mapper.DiceLogMapper;
+import org.qqbot.entity.DiceResultItem;
+import org.qqbot.mapper.DiceMapper;
 import org.qqbot.utils.MybatisUtil;
 
 import java.util.Date;
@@ -23,11 +24,13 @@ public class Dice {
 	 * @param face 骰子面数
 	 * @return 结果字符串
 	 */
-	private static String roll(int time, int face, long seed) {
+	private static DiceResultItem roll(int time, int face, long seed) {
 		Random random = new Random();
+		DiceResultItem item = new DiceResultItem();
 		random.setSeed(seed);
 		if (time == 1) {
-			return String.valueOf(random.nextInt(face) + 1);
+			int res = random.nextInt(face) + 1;
+			return item.setResultSum(res).setResultString(String.valueOf(res));
 		}
 		StringBuilder sb = new StringBuilder();
 		int sum = 0;
@@ -40,40 +43,39 @@ public class Dice {
 			seed = System.nanoTime();
 			random.setSeed(seed);
 		}
-		return sb.append(" = ").append(sum).toString();
+		String s = sb.append(" = ").append(sum).toString();
+		return item.setResultSum(sum).setResultString(s);
 	}
 
 	/**
 	 * 根据指令原始参数获取结果
-	 * @param s 原始参数
+	 * @param rollString 原始参数
 	 * @param senderName 发送方名片
 	 * @param senderId 发送方id
 	 * @return 结果
 	 */
-	public static String getRoll(String s, String senderName, String senderId) { //可接受输入：1d10、1D10
-		Matcher matcher = dicePattern.matcher(s);
-		if (!matcher.find() || matcher.groupCount() < 3) return "非法输入";//用户的锅
+	public static DiceResultItem getRoll(String rollString, String senderName, String senderId) { //可接受输入：1d10、1D10
+		Matcher matcher = dicePattern.matcher(rollString);
+		if (!matcher.find() || matcher.groupCount() < 3) return new DiceResultItem().setResultString("非法输入");//用户的锅
 		String d = matcher.group(2);
 		try {
 			int time = Integer.parseInt(matcher.group(1));
 			int face = Integer.parseInt(matcher.group(3));
 			Long seed = System.nanoTime();
+			DiceResultItem res = roll(time, face, seed);
 			StringBuilder sb = new StringBuilder();
 			sb.append(time);
-			if (d.equals("d")) {
-
-			}
 			sb.append(d.equals("d") ? "d" : "D")
 					.append(face)
 					.append(" = ")
-					.append(roll(time, face, seed));
-			String res = sb.toString();
-			appendDiceLog(res, senderName, senderId, seed);
-			return res;// 输出结果eg: 1d10 = 2
+					.append(res.getResultString());
+			String s = sb.toString();
+			appendDiceLog(s, senderName, senderId, seed);
+			return res.setResultString(s);// 输出结果eg: 1d10 = 2
 		} catch (NumberFormatException | StringIndexOutOfBoundsException e) {
-			return "非法输入";//用户的锅
+			return new DiceResultItem().setResultString("非法输入");//用户的锅
 		} catch (Exception e) {
-			return "Roll模块出错，请联系管理员";//我的锅
+			return new DiceResultItem().setResultString("Roll模块出错，请联系管理员");//我的锅
 		}
 	}
 
@@ -83,6 +85,6 @@ public class Dice {
 		item.setSenderName(senderName);
 		item.setTimestamp(new Date());
 		item.setLog(res + ", seed: " + seed);
-		return MybatisUtil.getInstance().insetData(DiceLogMapper.class, DiceLogItem.class, "insertDiceLog", item);
+		return MybatisUtil.getInstance().insetData(DiceMapper.class, DiceLogItem.class, "insertDiceLog", item);
 	}
 }

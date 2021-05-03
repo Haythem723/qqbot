@@ -1,20 +1,21 @@
 package org.qqbot.core;
 
 import net.mamoe.mirai.event.events.MessageEvent;
-import org.jdeferred2.Deferred;
 import org.jdeferred2.Promise;
-import org.jdeferred2.impl.DeferredObject;
 import org.qqbot.constant.CommandType;
 import org.qqbot.entity.Command;
 import org.qqbot.entity.DiceLogItem;
+import org.qqbot.entity.DiceMessageItem;
+import org.qqbot.entity.DiceResultItem;
 import org.qqbot.function.Dice;
-import org.qqbot.mapper.DiceLogMapper;
+import org.qqbot.mapper.DiceMapper;
 import org.qqbot.mirai.MiraiMain;
 import org.qqbot.utils.MybatisUtil;
 import org.qqbot.utils.SimplePromise;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -43,8 +44,24 @@ public class CommandDice implements CommandInvoker {
 			return this.handleErrorArgs(event, command);
 		}
 		return new SimplePromise<String>(deferred -> {
-			String roll = Dice.getRoll(args.get(0), event.getSenderName(), String.valueOf(event.getSender().getId()));
-			deferred.resolve(roll);
+			String senderId = String.valueOf(event.getSender().getId());
+			DiceResultItem resultItem = Dice.getRoll(args.get(0), event.getSenderName(), senderId);
+			List<DiceMessageItem> messageItems = MybatisUtil.getInstance().getListData(DiceMapper.class, DiceMessageItem.class, "getDiceMessage", resultItem.getResultSum());
+			if (messageItems.size() == 0) {
+				deferred.resolve(resultItem.toString());
+				return;
+			}
+			if (messageItems.size() == 1) {
+				deferred.resolve(resultItem.setMessage(messageItems.get(0).getMessage()).toString());
+				return;
+			}
+			final DiceMessageItem[] message = {messageItems.get(0)};
+			messageItems.forEach(item -> {
+				if (item.getId() == Long.parseLong(item.getReceiverId())) {
+					message[0] = item;
+				}
+			});
+			deferred.resolve(resultItem.setMessage(message[0].getMessage()).toString());
 		}, result -> {
 			MiraiMain.getInstance().quickReply(event, result);
 		}).me();
@@ -56,7 +73,7 @@ public class CommandDice implements CommandInvoker {
 
 	private Promise handleLog(MessageEvent event) {
 		return new SimplePromise<List<DiceLogItem>>(deferred -> {
-			List<DiceLogItem> logs = MybatisUtil.getInstance().getListData(DiceLogMapper.class, DiceLogItem.class, "getSenderDiceLog", String.valueOf(event.getSender().getId()));
+			List<DiceLogItem> logs = MybatisUtil.getInstance().getListData(DiceMapper.class, DiceLogItem.class, "getSenderDiceLog", String.valueOf(event.getSender().getId()));
 			if (logs == null) {
 				deferred.reject(null);
 				return;

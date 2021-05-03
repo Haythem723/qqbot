@@ -23,50 +23,49 @@ import static org.qqbot.constant.ConstantImage.FILE_NAME_SENSITIVE_GIF;
 import static org.qqbot.constant.ConstantImage.FILE_NAME_SENSITIVE_JPG;
 
 public class CommandNull implements CommandInvoker {
-	@Override
-	public Promise invoke(MessageEvent event, Command command) {
-		AtomicBoolean Sensitive = new AtomicBoolean(false);
-		StringBuilder sb = new StringBuilder();
-		sb.append("命令");
-		if (command.getArgs().size() != 0) {
-			final String[] content = new String[1];
-			content[0] = command.getArgs().get(0);
-			List<SensitiveItem> sensitiveList = MybatisUtil.getInstance().getListData(SensitiveMapper.class, SensitiveItem.class, "getSensitiveList");
-			sensitiveList.forEach(item -> {
-				String s = content[0];
-				s = new Sensitive().process(s);//首拼处理
-				if (s.contains(item.getRootword())){
-					Sensitive.set(true);
-				}
-			});
-		}
-		return new SimplePromise<MessageChain>(deferred -> {
-			MessageChain chain;
-			MessageChainBuilder builder = new MessageChainBuilder();
-			if(!Sensitive.get()){
-				sb.append(": ")
-						.append(command.getArgs().get(0))
-						.append(" ")
-						.append("有误或不存在\n")
-						.append("请使用 '/帮助' 或 '/help' 查看帮助");
-				chain = builder.append(sb.toString()).build();
-				deferred.reject(chain);
-				return;
-			}
-			sb.append("有误或不存在\n")
-					.append("请使用 '/帮助' 或 '/help' 查看帮助");
-			File resourceFile = FileUtil.getInstance().getImageResourceFile(FILE_NAME_SENSITIVE_GIF);
-			Image GIFImage = ExternalResource.Companion.uploadAsImage(resourceFile, event.getSubject());
-			if (GIFImage == null) {
-				chain = builder.append("不能再犹豫了，一定要出重拳").append(sb.toString()).build();
-			} else {
-				chain = builder.append(GIFImage).append(sb.toString()).build();
-			}
-			deferred.resolve(chain);
-		}).then(result -> {
-			MiraiMain.getInstance().quickReply(event, result);
-		}).fail(result -> {
-			MiraiMain.getInstance().quickReply(event, result);
-		});
-	}
+  @Override
+  public Promise invoke(MessageEvent event, Command command) {
+    AtomicBoolean Sensitive = new AtomicBoolean(false);
+    StringBuilder sb = new StringBuilder();
+    sb.append("命令");
+    if (command.getArgs().size() != 0) {
+      final String[] content = {command.getArgs().get(0)};
+      List<SensitiveItem> sensitiveList = MybatisUtil.getInstance().getListData(SensitiveMapper.class, SensitiveItem.class, "getSensitiveList");
+      sensitiveList.forEach(item -> {
+        String s = content[0];
+        s = new Sensitive().process(s);//首拼处理
+        if (s.contains(item.getRootword())) {
+          Sensitive.set(true);
+        }
+      });
+    }
+    return new SimplePromise<MessageChain>(deferred -> {
+      MessageChain chain;
+      MessageChainBuilder builder = new MessageChainBuilder();
+      if (!Sensitive.get()) {
+        sb.append(": ")
+            .append(command.getArgs().get(0))
+            .append(" ")
+            .append("有误或不存在\n")
+            .append("请使用 '/帮助' 或 '/help' 查看帮助");
+        chain = builder.append(sb.toString()).build();
+        deferred.reject(chain);
+        return;
+      }
+      sb.append("有误或不存在\n")
+          .append("请使用 '/帮助' 或 '/help' 查看帮助");
+      File resourceFile = FileUtil.getInstance().getImageResourceFile(FILE_NAME_SENSITIVE_GIF);
+      Image GIFImage = ExternalResource.Companion.uploadAsImage(resourceFile, event.getSubject());
+      if (GIFImage == null) {
+        chain = builder.append("不能再犹豫了，一定要出重拳").append(sb.toString()).build();
+      } else {
+        chain = builder.append(GIFImage).append(sb.toString()).build();
+      }
+      deferred.resolve(chain);
+    }).then(result -> {
+      MiraiMain.getInstance().quickReply(event, result);
+    }).fail(result -> {
+      MiraiMain.getInstance().quickReply(event, result);
+    });
+  }
 }

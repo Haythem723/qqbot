@@ -26,9 +26,9 @@ public class TestCommonUtil {
 	@Test
 	public void testParseCommand() {
 		MybatisUtil.init();
-		String content = "/感觉还是有bug比如说这是一条正常的命令命令里包含缩写sb";
+		String content = "/1d5";
 		Command command = CommonUtil.parseCommandAndArgs(content);
-		CommandInvoker invoker = new CommandNull();
+		CommandInvoker invoker = new CommandDice();
 		invoker.invoke(new MessageEvent() {
 			@NotNull
 			@Override

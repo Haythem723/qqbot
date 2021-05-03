@@ -34,4 +34,9 @@ public final class Plugin extends JavaPlugin {
 		MybatisUtil.init();
 		FileUtil.init();
 	}
+
+	@Override
+	public void onDisable() {
+		super.onDisable();
+	}
 }
