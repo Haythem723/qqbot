@@ -4,7 +4,6 @@ import net.mamoe.mirai.event.events.MessageEvent;
 import org.jdeferred2.Promise;
 import org.qqbot.constant.CommandType;
 import org.qqbot.constant.ConstantJoke;
-import org.qqbot.constant.ConstantMenu;
 import org.qqbot.entity.Command;
 import org.qqbot.entity.JokeLibItem;
 import org.qqbot.mapper.JokeMapper;
@@ -20,7 +19,7 @@ public class CommandJoke implements CommandInvoker {
 	@Override
 	public Promise invoke(MessageEvent event, Command command) {
 		ArrayList<String> args = command.getArgs();
-		if (args.size() != 0) return new CommandHelp().invoke(event, command.setType(CommandType.COMMAND_HELP).resetAndAddArgs(ConstantMenu.COMMAND_GET_HAPPY));
+		if (args.size() != 0) return new CommandHelp().invoke(event, command.setType(CommandType.COMMAND_HELP).setHelpVirtualId(CommandType.COMMAND_GET_HAPPY.getIndex()));
 		int id = new Random(System.nanoTime()).nextInt(ConstantJoke.MAXIMUM_JOKE_LIB + 1);
 		return new SimplePromise<String>(deferred -> {
 			JokeLibItem jokeLibItem = MybatisUtil.getInstance().getSingleData(JokeMapper.class, JokeLibItem.class, "getJoke", String.valueOf(id));

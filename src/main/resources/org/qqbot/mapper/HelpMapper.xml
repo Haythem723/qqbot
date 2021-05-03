@@ -24,6 +24,10 @@
         CALL get_help_info_item(#{helpId, jdbcType=CHAR});
     </select>
 
+    <select id="getHelpId" parameterType="java.lang.String" resultType="java.lang.String">
+        CALL get_help_id(#{helpVirtualId, jdbcType=CHAR});
+    </select>
+
     <select id="getHelpListItem" resultMap="HelpListItem">
         SELECT `id`, `command`, `shortcut`
         FROM help

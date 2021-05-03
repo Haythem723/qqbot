@@ -12,5 +12,7 @@ public interface HelpMapper extends BaseMapper {
 
 	List<HelpInfoItem> getHelpInfo(String helpId);
 
+	String getHelpId(String helpVirtualId);
+
 	HelpListItem getHelpListItem(String command);
 }

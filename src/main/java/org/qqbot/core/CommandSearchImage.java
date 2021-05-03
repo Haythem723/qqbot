@@ -34,7 +34,7 @@ public class CommandSearchImage implements CommandInvoker {
 		MessageChain message = event.getMessage();
 		List<SingleMessage> collect = message.stream().filter(singleMessage -> singleMessage instanceof Image).collect(Collectors.toList());
 		if (collect.isEmpty()) {
-			return new CommandHelp().invoke(event, command.setType(CommandType.COMMAND_SEARCH_IMAGE).resetAndAddArgs(ConstantMenu.COMMAND_SEARCH_IMAGE));
+			return new CommandHelp().invoke(event, command.setType(CommandType.COMMAND_SEARCH_IMAGE).setHelpVirtualId(CommandType.COMMAND_SEARCH_IMAGE.getIndex()));
 		}
 		return new SimplePromise<MessageChain>(deferred -> {
 			Image image = (Image) collect.get(0);

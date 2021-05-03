@@ -1,6 +1,8 @@
 package org.qqbot.entity;
 
 import org.qqbot.constant.CommandType;
+import org.qqbot.mapper.HelpMapper;
+import org.qqbot.utils.MybatisUtil;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -50,6 +52,11 @@ public class Command {
 
 	public Command resetAndAddArgs(String arg) {
 		return this.resetArgs().addArgs(arg);
+	}
+
+	public Command setHelpVirtualId(String helpId) {
+		String id = MybatisUtil.getInstance().getSingleData(HelpMapper.class, String.class, "getHelpId", helpId);
+		return this.resetArgs().addArgs(id);
 	}
 
 	@Override

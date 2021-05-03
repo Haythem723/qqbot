@@ -35,7 +35,7 @@ public class CommandMeaVoice implements CommandInvoker {
 		ArrayList<String> args = command.getArgs();
 		// 随机播放
 		if (args.size() != 0) {
-			return new CommandHelp().invoke(event, command.setType(CommandType.COMMAND_HELP).resetAndAddArgs(ConstantMenu.COMMAND_MEA_BUTTON));
+			return new CommandHelp().invoke(event, command.setType(CommandType.COMMAND_HELP).setHelpVirtualId(CommandType.COMMAND_MEA_BUTTON.getIndex()));
 		}
 		int res = new Random().nextInt(MAX_MEA_BUTTON_COUNT) + 1;
 		GroupMessageEvent finalEvent = (GroupMessageEvent) event;

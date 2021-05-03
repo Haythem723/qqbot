@@ -68,7 +68,7 @@ public class CommandDice implements CommandInvoker {
 	}
 
 	private Promise<String, String, String> handleErrorArgs(MessageEvent event, Command command) {
-		return new CommandHelp().invoke(event, command.resetAndAddArgs(CommandType.COMMAND_DICE.getIndex()));
+		return new CommandHelp().invoke(event, command.setHelpVirtualId(CommandType.COMMAND_DICE.getIndex()));
 	}
 
 	private Promise handleLog(MessageEvent event) {
