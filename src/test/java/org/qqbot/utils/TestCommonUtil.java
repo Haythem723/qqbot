@@ -15,10 +15,7 @@ import net.mamoe.mirai.utils.ExternalResource;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.junit.jupiter.api.Test;
-import org.qqbot.core.CommandDice;
-import org.qqbot.core.CommandInvoker;
-import org.qqbot.core.CommandJoke;
-import org.qqbot.core.CommandNull;
+import org.qqbot.core.*;
 import org.qqbot.entity.Command;
 import org.qqbot.function.Saucenao;
 
@@ -26,9 +23,9 @@ public class TestCommonUtil {
 	@Test
 	public void testParseCommand() {
 		MybatisUtil.init();
-		String content = "/1d5";
+		String content = "/config disable allow_r18";
 		Command command = CommonUtil.parseCommandAndArgs(content);
-		CommandInvoker invoker = new CommandDice();
+		CommandInvoker invoker = new CommandSetting();
 		invoker.invoke(new MessageEvent() {
 			@NotNull
 			@Override

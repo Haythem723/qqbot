@@ -17,6 +17,10 @@ public class GroupListener implements Consumer<GroupMessageEvent> {
 		Command command = CommonUtil.parseCommandAndArgs(content);
 		CommandInvoker invoker;
 		switch (command.getType()) {
+			case COMMAND_SETTING: {
+				invoker = new CommandSetting();
+				break;
+			}
 			case COMMAND_HELP: {
 				invoker = new CommandHelp();
 				break;

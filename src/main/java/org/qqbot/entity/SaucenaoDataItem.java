@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -27,6 +28,44 @@ public class SaucenaoDataItem {
   private String part;
   private String year;
   private String est_time;
+  //eh内容
+  private boolean isH = false;
+  private String eng_name;
+  private String jp_name;
+
+  public boolean isAniDB() {
+    return isAniDB;
+  }
+
+  public void setAniDB(boolean aniDB) {
+    isAniDB = aniDB;
+  }
+
+  public boolean isH() {
+    return isH;
+  }
+
+  public void setH(boolean h) {
+    isH = h;
+  }
+
+  public String getEng_name() {
+    this.isH = true;
+    return eng_name;
+  }
+
+  public void setEng_name(String eng_name) {
+    this.isH = true;
+    this.eng_name = eng_name;
+  }
+
+  public String getJp_name() {
+    return jp_name;
+  }
+
+  public void setJp_name(String jp_name) {
+    this.jp_name = jp_name;
+  }
 
   public boolean isIsdefault() {
     return isdefault;
@@ -56,7 +95,12 @@ public class SaucenaoDataItem {
   }
 
   public List<String> getExt_urls() {
-    return ext_urls;
+    List<String> res = ext_urls;
+    if (res == null) {
+      res = new ArrayList<String>();
+      res.add("无");
+    }
+    return res;
   }
 
   public void setExt_urls(List<String> ext_urls) {

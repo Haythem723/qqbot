@@ -18,6 +18,7 @@
         SELECT `id`, `command`, `shortcut`
         FROM help
         WHERE `enable` = 'true'
+        AND `id` > 0
     </select>
 
     <select id="getHelpInfo" parameterType="java.lang.String" resultMap="HelpInfoItem">

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.qqbot.mapper.SettingMapper">
+    <resultMap id="BaseMap" type="org.qqbot.entity.SettingItem">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="key" property="key" jdbcType="VARCHAR"/>
+        <result column="value" property="value" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="loadSettings" resultMap="BaseMap">
+        SELECT `id`, `key`, `value`
+        FROM `settings`
+    </select>
+
+    <select id="getSetting" resultMap="BaseMap">
+        SELECT `id`, `key`, `value`
+        FROM `settings`
+        WHERE `key` = #{settingKey}
+    </select>
+
+    <update id="setSetting">
+        UPDATE `settings`
+        SET `value` = #{settingValue}
+        WHERE `key` = #{settingKey}
+    </update>
+
+    <update id="enableSetting">
+        UPDATE `settings`
+        SET `value` = 'true'
+        WHERE `key` = #{settingKey}
+    </update>
+
+    <update id="disableSetting">
+        UPDATE `settings`
+        SET `value` = 'false'
+        WHERE `key` = #{settingKey}
+    </update>
+</mapper>

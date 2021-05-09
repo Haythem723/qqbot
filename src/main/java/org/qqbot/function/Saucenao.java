@@ -61,21 +61,21 @@ public class Saucenao {
       return handleError(null);
     }
     Matcher statusMatcher = statusPattern.matcher(json);
-    if (!statusMatcher.find()) return handleError();
+    if (!statusMatcher.find()) return handleError(0);
     String statusInt = statusMatcher.group(1);
     Integer integer = CommonUtil.parseInt(statusInt);
-    if (integer == null) return handleError();
+    if (integer == null) return handleError(1);
     if (integer != 0) {
       Matcher errorMatcher = errorMessagePattern.matcher(json);
       if (errorMatcher.find()) {
         String errorMsg = errorMatcher.group(1);
         return handleError(errorMsg);
       } else {
-        return handleError();
+        return handleError(2);
       }
     }
     Matcher resMatcher = resultPattern.matcher(json);
-    if (!resMatcher.find()) return handleError();
+    if (!resMatcher.find()) return handleError(3);
     String resString = resMatcher.group(1);
     ObjectMapper mapper = new ObjectMapper();
     SaucenaoResult[] results;
@@ -103,8 +103,8 @@ public class Saucenao {
     return result;
   }
 
-  public static SaucenaoResult handleError() {
-    return new SaucenaoResult(-1, "api返回格式异常");
+  public static SaucenaoResult handleError(int index) {
+    return new SaucenaoResult(-1, "api返回格式异常 index: " + index);
   }
 
   public static SaucenaoResult handleError(String errorMsg) {

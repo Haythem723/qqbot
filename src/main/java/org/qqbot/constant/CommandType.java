@@ -1,7 +1,8 @@
 package org.qqbot.constant;
 
 public enum CommandType {
-	COMMAND_NULL("0"),
+	COMMAND_NULL("-1"),
+	COMMAND_SETTING(ConstantMenu.COMMAND_SETTING),
 	COMMAND_HELP(ConstantMenu.COMMAND_HELP),
 	COMMAND_DICE(ConstantMenu.COMMAND_DICE),
 	COMMAND_NEED(ConstantMenu.COMMAND_NEED),

@@ -4,6 +4,7 @@ package org.qqbot.constant;
  * @author diyigemt
  */
 public class ConstantMenu {
+	public static final String COMMAND_SETTING = "0";
 	public static final String COMMAND_HELP = "1";
 	public static final String COMMAND_DICE = "2";
 	public static final String COMMAND_NEED = "3";

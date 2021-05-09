@@ -8,14 +8,15 @@ import java.io.File;
 public class FileUtil implements InitializeUtil {
   private static String RESOURCE_ROOT_FOLDER_PATH;
   /* linux: "/" windows: "\\" */
-  private static String SYSTEM_PATH_DIV;
+  public static String SYSTEM_PATH_DIV;
 
   private static final FileUtil INSTANCE = new FileUtil();
 
   public static void init() {
     File dataFolder = Plugin.INSTANCE.getDataFolder();
     RESOURCE_ROOT_FOLDER_PATH = dataFolder.toPath().toString();
-    SYSTEM_PATH_DIV = System.getProperty("os.name").startsWith("win") ? "\\" : "/";
+//    SYSTEM_PATH_DIV = System.getProperty("os.name").startsWith("win") ? "\\" : "/";
+    SYSTEM_PATH_DIV = File.separator;
   }
 
   public static FileUtil getInstance() {

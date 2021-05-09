@@ -69,6 +69,7 @@
 		<mapper resource="org/qqbot/mapper/JokeMapper.xml"/>
 		<mapper resource="org/qqbot/mapper/DiceMapper.xml"/>
 		<mapper resource="org/qqbot/mapper/SensitiveMapper.xml"/>
+		<mapper resource="org/qqbot/mapper/SettingMapper.xml"/>
 	</mappers>
 
 </configuration>
