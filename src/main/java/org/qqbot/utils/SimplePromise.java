@@ -14,14 +14,15 @@ public class SimplePromise<T> {
 	public SimplePromise(PromiseHandler<T> handler) {
 		this.deferred = new DeferredObject<T, T, T>();
 		this.promise = deferred.promise();
-		new Thread(() -> {
+		Thread thread = new Thread(() -> {
 			try {
 				Thread.sleep(1000);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
 			handler.handler(deferred);
-		}).start();
+		});
+		thread.start();
 	}
 
 	public SimplePromise(PromiseHandler<T> handler, DoneCallback<? super T> doneCallback) {

@@ -59,4 +59,10 @@ public class SettingUtil implements InitializeUtil {
     String s = get(key);
     return Boolean.parseBoolean(s);
   }
+
+  public boolean getBooleanValue(String key, boolean defaultValue) {
+    String s = get(key);
+    if (s == null) return defaultValue;
+    return Boolean.parseBoolean(s);
+  }
 }

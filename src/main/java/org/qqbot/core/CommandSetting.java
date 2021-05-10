@@ -22,7 +22,6 @@ public class CommandSetting implements CommandInvoker {
     if (!ConstantSetting.adminList.contains(senderId)) {
       return handleError(event, "没有权限");
     }
-    // TODO
     ArrayList<String> args = command.getArgs();
     if (args == null || args.size() == 0) {
       return handleError(event, "没有参数\n可用: set enable disable");

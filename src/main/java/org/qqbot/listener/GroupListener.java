@@ -1,9 +1,11 @@
 package org.qqbot.listener;
 
 import net.mamoe.mirai.event.events.GroupMessageEvent;
+import org.qqbot.constant.ConstantSetting;
 import org.qqbot.core.*;
 import org.qqbot.entity.Command;
 import org.qqbot.utils.CommonUtil;
+import org.qqbot.utils.SettingUtil;
 
 import java.util.function.Consumer;
 
@@ -11,9 +13,10 @@ public class GroupListener implements Consumer<GroupMessageEvent> {
 	@Override
 	public void accept(GroupMessageEvent groupMessageEvent) {
 		String content = groupMessageEvent.getMessage().serializeToMiraiCode();
-		// 若消息没有@Bot则不做回应
+		// 若没有@Bot则不做回应
 		if (!content.contains("[mirai:at:1741557205]")) return;
 		content = content.replace("[mirai:at:1741557205]", "").trim();
+		// 提取命令和参数
 		Command command = CommonUtil.parseCommandAndArgs(content);
 		CommandInvoker invoker;
 		switch (command.getType()) {

@@ -13,7 +13,7 @@ public enum CommandType {
 	;
 	private final String index;
 
-	private CommandType(String index) {
+	CommandType(String index) {
 		this.index = index;
 	}
 

@@ -95,6 +95,7 @@ public class Saucenao {
       tmpSimilarity = Float.parseFloat(headerItem.getSimilarity());
       if (maxSimilarity < tmpSimilarity) {
         maxSimilarity = tmpSimilarity;
+        // 如果是pixiv或者anidb来源 优先选择
         if (headerItem.getIndex_id() == 5 || headerItem.getIndex_id() == 21) result = saucenaoResult;
       }
     }

@@ -49,13 +49,15 @@ public class CommandSearchImage implements CommandInvoker {
 			}
 			SaucenaoHeaderItem header = imageResult.getHeader();
 			int index_id = header.getIndex_id();
-			String allowR18 = SettingUtil.getInstance().get(ConstantSetting.SETTING_ALLOW_R18, "false");
-			boolean r18 = Boolean.parseBoolean(allowR18);
+			// 获取r18设置
+			boolean r18 = SettingUtil.getInstance().getBooleanValue(ConstantSetting.SETTING_ALLOW_R18, false);
 			if (bandDBIndex.containsKey(index_id) && !r18) {
 				File resourceFile = FileUtil.getInstance().getImageResourceFile(FILE_NAME_HNG);
+				// 获取禁止r18图片
 				Image hngImage = ExternalResource.Companion.uploadAsImage(resourceFile, event.getSubject());
 				MessageChain chain;
 				if (hngImage == null) {
+					// 如果没获取到 回复文字
 					chain = builder.append("H是禁止的").build();
 				} else {
 					chain = builder.append(hngImage).build();
