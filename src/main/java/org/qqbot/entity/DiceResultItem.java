@@ -44,9 +44,8 @@ public class DiceResultItem {
   @Override
   public String toString() {
     StringBuffer sb = new StringBuffer();
-    if (this.message != null) sb.append(this.message);
-    sb.append("\n")
-        .append(this.resultString);
+    if (this.message != null) sb.append(this.message).append("\n");
+    sb.append(this.resultString);
     return sb.toString();
   }
 }

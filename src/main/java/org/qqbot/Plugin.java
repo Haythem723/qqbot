@@ -22,7 +22,7 @@ public final class Plugin extends JavaPlugin {
 	public static final MiraiLogger logger = INSTANCE.getLogger();
 
 	private Plugin() {
-		super(new JvmPluginDescriptionBuilder("org.qqbot", "1.2.6")
+		super(new JvmPluginDescriptionBuilder("org.qqbot", "1.2.7")
 				.author("diyigemt HayThem")
 				.name("qq-bot")
 				.build());

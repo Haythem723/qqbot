@@ -16,6 +16,7 @@ import org.qqbot.entity.SaucenaoResult;
 import org.qqbot.function.Saucenao;
 import org.qqbot.mirai.MiraiMain;
 import org.qqbot.utils.FileUtil;
+import org.qqbot.utils.HttpUtil;
 import org.qqbot.utils.SettingUtil;
 import org.qqbot.utils.SimplePromise;
 
@@ -23,6 +24,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import static org.qqbot.constant.ConstantImage.FILE_NAME_HNG;
@@ -94,6 +97,14 @@ public class CommandSearchImage implements CommandInvoker {
 				//TODO: 那就写啊23333
 				deferred.resolve(chain);
 				return;
+			}
+			//如果来源与pixiv 尝试通过pixiv.cat反代获取原图
+			if (pixiv) {
+				String imageSource = Saucenao.constructSourceURL(imageResult);
+				if (imageSource != null) {
+					image = ExternalResource.Companion.uploadAsImage(new HttpUtil().getInputStream(imageSource), event.getSubject());
+					builder.append("已获取原图:\n");
+				}
 			}
 			MessageChain build = builder.append(image)
 					.append("\n相似度: ")

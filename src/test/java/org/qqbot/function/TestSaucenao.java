@@ -13,8 +13,7 @@ import java.io.IOException;
 public class TestSaucenao {
   @Test
   public void test() {
-    SaucenaoResult imageResult = Saucenao.getResult("https://pixiv.cat/83736901.jpg");
-    MessageChainBuilder builder = new MessageChainBuilder();
+    SaucenaoResult imageResult = Saucenao.getResult("https://pixiv.cat/88396328-2.jpg");
     SaucenaoHeaderItem header = imageResult.getHeader();
     int index_id = header.getIndex_id();
     SaucenaoDataItem data = imageResult.getData();
@@ -26,6 +25,7 @@ public class TestSaucenao {
     boolean pixiv = data.isPixiv();
     boolean anidb = data.isAniDB();
     boolean q = pixiv || anidb;
+    String s = Saucenao.constructSourceURL(imageResult);
   }
 
   @Test

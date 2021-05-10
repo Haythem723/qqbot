@@ -9,6 +9,7 @@ public class ConstantSaucenao {
 	public static final String KEY = "257501498bb01aebc1c5cd8e659b00a1a8545e8a";
 	public static final int OUTPUT_TYPE = 2;
 	public static final int NUMRES = 5;
+	public static final String PROXY_BASE_URL = "https://pixiv.cat/";
 	public static final Map<Integer, String> DBIndex = new HashMap<Integer, String>() {{
 		put(8, "Nico Nico Seiga");
 		put(9, "Danbooru");

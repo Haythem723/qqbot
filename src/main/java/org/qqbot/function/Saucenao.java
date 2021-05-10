@@ -2,6 +2,7 @@ package org.qqbot.function;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.qqbot.entity.SaucenaoDataItem;
 import org.qqbot.entity.SaucenaoHeaderItem;
 import org.qqbot.entity.SaucenaoResult;
 import org.qqbot.utils.CommonUtil;
@@ -19,6 +20,7 @@ public class Saucenao {
   private static final Pattern resultPattern = Pattern.compile("\"results\": ?(\\[.*])");
   private static final Pattern errorMessagePattern = Pattern.compile("\"message\": ?\"(.*.)\"");
   private static final Pattern statusPattern = Pattern.compile("\"status\": ?(\\d+),\\s*\"r");
+  private static final Pattern multipleImagePatter = Pattern.compile("_p([1-9][0-9]*)_?");
 
   public static String requestImg(String url) throws IOException {
     StringBuilder sb = new StringBuilder();
@@ -110,5 +112,21 @@ public class Saucenao {
 
   public static SaucenaoResult handleError(String errorMsg) {
     return new SaucenaoResult(-1, "api调用失败: " + errorMsg);
+  }
+
+  public static String constructSourceURL(SaucenaoResult result) {
+    SaucenaoDataItem data = result.getData();
+    if (!data.isPixiv()) return null;
+    String res = null;
+    String s = result.getHeader().getIndex_name();
+    Matcher matcher = multipleImagePatter.matcher(s);
+    if (matcher.find()) {
+      // 获取对应pixiv cat的对应index
+      int imageIndex = Integer.parseInt(matcher.group(1)) + 1;
+      res = PROXY_BASE_URL + data.getPixiv_id() + "-" + imageIndex + ".jpg";
+    } else {
+      res = PROXY_BASE_URL + data.getPixiv_id() + ".jpg";
+    }
+    return res;
   }
 }
