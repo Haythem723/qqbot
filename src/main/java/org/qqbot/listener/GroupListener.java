@@ -1,12 +1,19 @@
 package org.qqbot.listener;
 
 import net.mamoe.mirai.event.events.GroupMessageEvent;
+import net.mamoe.mirai.event.events.MessageEvent;
+import net.mamoe.mirai.message.data.At;
+import org.qqbot.annotation.CheckPermission;
+import org.qqbot.annotation.GroupPermission;
+import org.qqbot.annotation.Permission;
 import org.qqbot.constant.ConstantSetting;
 import org.qqbot.core.*;
 import org.qqbot.entity.Command;
+import org.qqbot.mirai.MiraiMain;
 import org.qqbot.utils.CommonUtil;
 import org.qqbot.utils.SettingUtil;
 
+import java.lang.reflect.Method;
 import java.util.function.Consumer;
 
 public class GroupListener implements Consumer<GroupMessageEvent> {
@@ -14,8 +21,8 @@ public class GroupListener implements Consumer<GroupMessageEvent> {
 	public void accept(GroupMessageEvent groupMessageEvent) {
 		String content = groupMessageEvent.getMessage().serializeToMiraiCode();
 		// 若没有@Bot则不做回应
-		if (!content.contains("[mirai:at:1741557205]")) return;
-		content = content.replace("[mirai:at:1741557205]", "").trim();
+		if (!groupMessageEvent.getMessage().contains(new At(groupMessageEvent.getBot().getId()))) return;
+//		content = content.replace("[mirai:at:1741557205]", "").trim();
 		// 提取命令和参数
 		Command command = CommonUtil.parseCommandAndArgs(content);
 		CommandInvoker invoker;
@@ -55,6 +62,23 @@ public class GroupListener implements Consumer<GroupMessageEvent> {
 			default: {
 				invoker = new CommandNull();
 			}
+		}
+		Method method = null;
+		Class<? extends CommandInvoker> aClass = invoker.getClass();
+		GroupPermission classAnnotation = aClass.getAnnotation(GroupPermission.class);
+
+		try {
+			method = aClass.getMethod("invoke", MessageEvent.class, Command.class);
+		} catch (NoSuchMethodException e) {
+			e.printStackTrace();
+		}
+		GroupPermission methodAnnotation = null;
+		if (method != null) methodAnnotation = method.getAnnotation(GroupPermission.class);
+		Permission permission = CheckPermission.getGroupPermission(methodAnnotation, classAnnotation);
+		boolean pass = CheckPermission.checkGroupPermission(permission, groupMessageEvent);
+		if (!pass) {
+			MiraiMain.getInstance().quickReply(groupMessageEvent, "无权操作!");
+			return;
 		}
 		invoker.invoke(groupMessageEvent, command);
 	}

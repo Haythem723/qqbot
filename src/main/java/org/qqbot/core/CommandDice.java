@@ -2,6 +2,7 @@ package org.qqbot.core;
 
 import net.mamoe.mirai.event.events.MessageEvent;
 import org.jdeferred2.Promise;
+import org.qqbot.annotation.GroupPermission;
 import org.qqbot.constant.CommandType;
 import org.qqbot.entity.Command;
 import org.qqbot.entity.DiceLogItem;
@@ -28,6 +29,7 @@ public class CommandDice implements CommandInvoker {
 	private static final Pattern dicePattern = Pattern.compile("^([0-9]+)[dD*]([0-9]+)$");
 
 	@Override
+	@GroupPermission(blocks = {"1355247243"})
 	public Promise invoke(MessageEvent event, Command command) {
 		ArrayList<String> args = command.getArgs();
 		if (args == null || args.size() > 2) {
