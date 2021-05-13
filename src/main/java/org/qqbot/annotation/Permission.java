@@ -1,14 +1,11 @@
 package org.qqbot.annotation;
 
-import lombok.Data;
-
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
 /**
  * 用于存储@接口信息
- * 优先级 at-> blocks -> allows -> isGroupOwnerOnly -> isAdminOnly
+ * 优先级 at-> permission table -> blocks -> allows -> isGroupOwnerOnly -> isAdminOnly
  */
 public class Permission {
 

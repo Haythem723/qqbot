@@ -63,19 +63,7 @@ public class GroupListener implements Consumer<GroupMessageEvent> {
 				invoker = new CommandNull();
 			}
 		}
-		Method method = null;
-		Class<? extends CommandInvoker> aClass = invoker.getClass();
-		GroupPermission classAnnotation = aClass.getAnnotation(GroupPermission.class);
-
-		try {
-			method = aClass.getMethod("invoke", MessageEvent.class, Command.class);
-		} catch (NoSuchMethodException e) {
-			e.printStackTrace();
-		}
-		GroupPermission methodAnnotation = null;
-		if (method != null) methodAnnotation = method.getAnnotation(GroupPermission.class);
-		Permission permission = CheckPermission.getGroupPermission(methodAnnotation, classAnnotation);
-		boolean pass = CheckPermission.checkGroupPermission(permission, groupMessageEvent);
+		boolean pass = CheckPermission.checkGroupPermission(invoker, groupMessageEvent, command);
 		if (!pass) {
 			MiraiMain.getInstance().quickReply(groupMessageEvent, "无权操作!");
 			return;

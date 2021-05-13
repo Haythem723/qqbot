@@ -14,6 +14,10 @@ public class HelpListItem {
 		return String.valueOf(this.id);
 	}
 
+	public int getIntId() {
+		return this.id;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();

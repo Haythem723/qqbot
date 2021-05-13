@@ -72,7 +72,7 @@ public class CommonUtil {
 			// 由于 (.*) 的存在 导致会多一个 "" 参数 需要过滤
 			if (count == 2 && (!matcher.group(2).equals(""))) {
 				String arg = matcher.group(2);
-				String[] args = arg.split(" ");
+				String[] args = arg.split(" +");
 				for (String s : args) {
 					if (s.equals("")) continue;
 					command.addArgs(s);

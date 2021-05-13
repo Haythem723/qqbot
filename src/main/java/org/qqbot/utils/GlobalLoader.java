@@ -1,5 +1,6 @@
 package org.qqbot.utils;
 
+import jdk.internal.loader.BootLoader;
 import org.qqbot.Plugin;
 
 import java.io.FileFilter;
@@ -20,10 +21,8 @@ public class GlobalLoader {
   private static char SYSTEM_PATH_DIV = File.separatorChar;
   public static void init() {
     List<Class> allClassByInterface = null;
-    Plugin.logger.info("start");
     try {
       allClassByInterface = GlobalLoader.getAllClassByInterface(Class.forName("org.qqbot.utils.InitializeUtil"));
-      Plugin.logger.info(String.valueOf(allClassByInterface.size()));
       for (Class<? extends InitializeUtil> aClass : allClassByInterface) {
         Method init = aClass.getMethod("init");
         init.invoke(null);
@@ -117,6 +116,7 @@ public class GlobalLoader {
                 if (idx != -1) {
                   //获取包名 把"/"替换成"."
                   packageName = name.substring(0, idx).replace(SYSTEM_PATH_DIV, '.');
+                  Plugin.logger.warning("packageName: " + packageName);
                 }
                 //如果可以迭代下去 并且是一个包
                 if ((idx != -1) || recursive) {

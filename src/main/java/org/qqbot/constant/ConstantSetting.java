@@ -1,29 +1,42 @@
 package org.qqbot.constant;
 
-import java.util.List;
-import java.util.Arrays;
-
 public class ConstantSetting {
-  // 管理员列表 允许使用特权指令
-  public static final List<Long> adminList = Arrays.asList(
-      1355247243L,
-      1328343252L
-  );
 
-  public enum SettingOperates {
+  public enum SettingOperate {
     OPERATE_NULL("null"),
     OPERATE_SET("set"),
     OPERATE_DISABLE("disable"),
-    OPERATE_ENABLE("enable")
+    OPERATE_ENABLE("enable"),
+    OPERATE_PERMIT("permit")
     ;
     private final String operate;
 
-    SettingOperates(String operate) {
+    SettingOperate(String operate) {
       this.operate = operate;
     }
 
-    public static SettingOperates getOperateByString(String s) {
-      for (SettingOperates operate : SettingOperates.values()) {
+    public static SettingOperate getOperateByString(String s) {
+      for (SettingOperate operate : SettingOperate.values()) {
+        if (operate.operate.equals(s)) return operate;
+      }
+      return OPERATE_NULL;
+    }
+  }
+
+  public enum PermitOperate {
+    OPERATE_NULL("null"),
+    OPERATE_ADD("add"),
+    OPERATE_REMOVE("remove"),
+    OPERATE_DISABLE("disable"),
+    OPERATE_ENABLE("enable")
+    ;
+
+    private final String operate;
+
+    PermitOperate(String operate) { this.operate = operate; }
+
+    public static PermitOperate getPermitOperateByString(String s) {
+      for (PermitOperate operate : PermitOperate.values()) {
         if (operate.operate.equals(s)) return operate;
       }
       return OPERATE_NULL;

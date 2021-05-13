@@ -29,7 +29,6 @@ public class CommandDice implements CommandInvoker {
 	private static final Pattern dicePattern = Pattern.compile("^([0-9]+)[dD*]([0-9]+)$");
 
 	@Override
-	@GroupPermission(blocks = {"1355247243"})
 	public Promise invoke(MessageEvent event, Command command) {
 		ArrayList<String> args = command.getArgs();
 		if (args == null || args.size() > 2) {
@@ -59,7 +58,7 @@ public class CommandDice implements CommandInvoker {
 			}
 			final DiceMessageItem[] message = {messageItems.get(0)};
 			messageItems.forEach(item -> {
-				if (item.getId() == Long.parseLong(item.getReceiverId())) {
+				if (senderId.equals(item.getReceiverId())) {
 					message[0] = item;
 				}
 			});

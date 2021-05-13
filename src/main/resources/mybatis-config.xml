@@ -70,6 +70,7 @@
 		<mapper resource="org/qqbot/mapper/DiceMapper.xml"/>
 		<mapper resource="org/qqbot/mapper/SensitiveMapper.xml"/>
 		<mapper resource="org/qqbot/mapper/SettingMapper.xml"/>
+		<mapper resource="org/qqbot/mapper/PermissionMapper.xml"/>
 	</mappers>
 
 </configuration>

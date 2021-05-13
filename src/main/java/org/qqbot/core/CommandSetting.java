@@ -2,9 +2,8 @@ package org.qqbot.core;
 
 import net.mamoe.mirai.event.events.MessageEvent;
 import org.jdeferred2.Promise;
-import org.qqbot.constant.CommandType;
-import org.qqbot.constant.ConstantSetting;
-import org.qqbot.constant.ConstantSetting.*;
+import org.qqbot.annotation.GroupPermission;
+import org.qqbot.constant.ConstantSetting.SettingOperate;
 import org.qqbot.entity.Command;
 import org.qqbot.entity.SettingItem;
 import org.qqbot.mapper.SettingMapper;
@@ -17,23 +16,20 @@ import java.util.ArrayList;
 
 public class CommandSetting implements CommandInvoker {
   @Override
+  @GroupPermission(allows = {"1355247243", "1328343252"})
   public Promise invoke(MessageEvent event, Command command) {
-    long senderId = event.getSender().getId();
-    if (!ConstantSetting.adminList.contains(senderId)) {
-      return handleError(event, "没有权限");
-    }
     ArrayList<String> args = command.getArgs();
     if (args == null || args.size() == 0) {
-      return handleError(event, "没有参数\n可用: set enable disable");
+      return handleError(event, "没有参数\n可用: set enable disable permit");
     }
     String targetOperate = args.get(0);
     String settingKey = args.get(1);
     StringBuilder sb = new StringBuilder();
-    if (checkSettingExist(settingKey)) {
+    if (!targetOperate.equals("permit") && checkSettingExist(settingKey)) {
       sb.append(settingKey).append(" 不存在!");
       return handleError(event, sb.toString());
     }
-    SettingOperates operate = SettingOperates.getOperateByString(targetOperate);
+    SettingOperate operate = SettingOperate.getOperateByString(targetOperate);
     switch (operate) {
       case OPERATE_SET: {
       	if (args.size() < 3) {
@@ -75,6 +71,10 @@ public class CommandSetting implements CommandInvoker {
           sb.append("操作失败");
         }
         break;
+      }
+      case OPERATE_PERMIT: {
+        args.remove("permit");
+        return new CommandPermission().invoke(event, command);
       }
       case OPERATE_NULL: {
       	sb.append("指令不存在");

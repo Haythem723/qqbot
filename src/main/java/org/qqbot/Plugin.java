@@ -35,10 +35,10 @@ public final class Plugin extends JavaPlugin {
 		//指定在botEvent 且 bot的id(qq号)为某一定值时 向该频道广播事件 触发监听器
 		EventChannel<Event> channel = GlobalEventChannel.INSTANCE.filter(event -> event instanceof BotEvent && ((BotEvent) event).getBot().getId() == 1741557205L);
 		channel.subscribeAlways(GroupMessageEvent.class, new GroupListener());
-//		GlobalLoader.init();
-		FileUtil.init();
-		MybatisUtil.init();
-		SettingUtil.init();
+		GlobalLoader.init();
+//		FileUtil.init();
+//		MybatisUtil.init();
+//		SettingUtil.init();
 	}
 
 	@Override

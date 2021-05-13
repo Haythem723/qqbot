@@ -52,7 +52,7 @@ public class MybatisUtil implements InitializeUtil {
 		return factory.openSession();
 	}
 
-	public <T extends BaseMapper, K> K getSingleData(Class<T> mapperClass, Class<K> resClass, String methodName, String arg1) {
+	public <T extends BaseMapper, K> K getSingleData(Class<T> mapperClass, Class<K> resClass, String methodName, Object arg1) {
 		SqlSession sqlSession = MybatisUtil.getInstance().getSqlSession();
 		T mapper = sqlSession.getMapper(mapperClass);
 		K res = null;
@@ -111,7 +111,8 @@ public class MybatisUtil implements InitializeUtil {
 		}
 		try {
 			if (method == null) throw new NoSuchMethodException("没有与名字" + methodName + "对应的方法!");
-			res = (int) method.invoke(mapper, arg1);
+			Object o = method.invoke(mapper, arg1);
+			if (o != null) res = Integer.parseInt(o.toString());
 			sqlSession.commit();
 		} catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
 			e.printStackTrace();
@@ -169,5 +170,27 @@ public class MybatisUtil implements InitializeUtil {
 			sqlSession.close();
 		}
 		return res;
+	}
+
+	public <T extends BaseMapper> void removeData(Class<T> mapperClass, String methodName, Object arg1) {
+		SqlSession sqlSession = MybatisUtil.getInstance().getSqlSession();
+		T mapper = sqlSession.getMapper(mapperClass);
+		Method[] methods = mapperClass.getMethods();
+		Method method = null;
+		for (Method m : methods) {
+			if (m.getName().equals(methodName)) {
+				method = m;
+				break;
+			}
+		}
+		try {
+			if (method == null) throw new NoSuchMethodException("没有与名字" + methodName + "对应的方法!");
+			method.invoke(mapper, arg1);
+			sqlSession.commit();
+		} catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
+			e.printStackTrace();
+		} finally {
+			sqlSession.close();
+		}
 	}
 }

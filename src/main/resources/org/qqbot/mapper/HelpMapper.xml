@@ -36,5 +36,4 @@
            OR `shortcut` = #{command}
             AND `enable` = 'true'
     </select>
-
 </mapper>

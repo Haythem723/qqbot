@@ -5,7 +5,7 @@ import java.lang.annotation.*;
 /**
  * @author diyigemt
  * 群消息权限规定
- * 优先级 at-> blocks -> allows -> isGroupOwnerOnly -> isAdminOnly
+ * 优先级 at-> permission table -> blocks -> allows -> isGroupOwnerOnly -> isAdminOnly
  */
 @Target({ElementType.METHOD, ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
